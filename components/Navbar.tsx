@@ -41,30 +41,30 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
         {/* Desktop Nav */}
         <div className="hidden lg:flex items-center gap-10">
           {navLinks.map((link) => (
-            <a key={link.name} href={link.href} className={`text-sm font-medium transition-all hover:text-blue-600 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+            <a key={link.name} href={link.href} className={`text-sm font-medium transition-all hover:text-blue-600 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'} touchable`}>
               {link.name}
             </a>
           ))}
           
           <button 
             onClick={toggleTheme}
-            className={`p-2 rounded-xl transition-colors ${theme === 'dark' ? 'hover:bg-white/5 text-slate-400' : 'hover:bg-slate-100 text-slate-600'}`}
+            className={`p-2 rounded-xl transition-colors touchable ${theme === 'dark' ? 'hover:bg-white/5 text-slate-400' : 'hover:bg-slate-100 text-slate-600'}`}
             aria-label="Toggle Theme"
           >
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
           </button>
 
-          <a href="#contact" className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-all hover:shadow-[0_0_20px_rgba(37,99,235,0.4)]">
+          <a href="#contact" className="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-all hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] touchable force-full-mobile">
             Partner With Us
           </a>
         </div>
 
         {/* Mobile Toggle */}
         <div className="flex items-center gap-4 lg:hidden">
-          <button onClick={toggleTheme} className={`p-2 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+          <button onClick={toggleTheme} className={`p-2 touchable ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
           </button>
-          <button className={`${theme === 'dark' ? 'text-white' : 'text-slate-900'}`} onClick={() => setIsOpen(!isOpen)}>
+          <button className={`touchable ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`} onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
@@ -77,7 +77,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
         } px-8 py-10 shadow-2xl`}>
           <div className="flex flex-col gap-6">
             {navLinks.map((link) => (
-              <a key={link.name} href={link.href} className="text-lg font-bold block w-full py-4" onClick={() => setIsOpen(false)}>
+              <a key={link.name} href={link.href} className="text-lg font-bold block w-full py-4 touchable" onClick={() => setIsOpen(false)}>
                 {link.name}
               </a>
             ))}

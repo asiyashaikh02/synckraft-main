@@ -27,7 +27,7 @@ export const CTA: React.FC<ThemeProps> = ({ theme }) => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
-               <a href="mailto:synckraft.me@gmail.com" className="group px-8 py-5 rounded-2xl bg-white text-blue-600 font-bold text-xl transition-all flex items-center gap-3 hover:shadow-2xl hover:-translate-y-1 w-full sm:w-auto justify-center text-center">
+               <a href="mailto:synckraft.me@gmail.com" className="group px-8 py-5 rounded-2xl bg-white text-blue-600 font-bold text-xl transition-all flex items-center gap-3 hover:shadow-2xl hover:-translate-y-1 w-full sm:w-auto justify-center text-center touchable">
                  Start a Conversation <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform" />
                </a>
                <div className="flex items-center gap-3 text-blue-100 font-bold text-lg">

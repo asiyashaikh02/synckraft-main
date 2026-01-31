@@ -79,7 +79,7 @@ export const Footer: React.FC<ThemeProps> = ({ theme }) => {
                 href={social.href} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-blue-200 hover:text-white transition-all transform hover:scale-125 hover:-translate-y-1"
+                className="text-blue-200 hover:text-white transition-all transform hover:scale-110 hover:-translate-y-0.5 touchable inline-flex items-center justify-center p-2 rounded-lg"
                 aria-label={social.label}
               >
                 <social.icon size={26} strokeWidth={1.5} />

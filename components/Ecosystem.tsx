@@ -80,7 +80,7 @@ export const Ecosystem: React.FC<ThemeProps> = ({ theme }) => {
           {ventures.map((venture, index) => (
             <div 
               key={index} 
-              className={`group p-12 rounded-[3.5rem] border transition-all duration-700 h-full flex flex-col reveal card-glow ${
+              className={`group p-8 sm:p-12 rounded-[3.5rem] border transition-all duration-700 h-full flex flex-col reveal card-glow touchable ${
                 index === currentIndex 
                 ? (theme === 'dark' ? 'bg-[#111112] border-blue-600/50 shadow-2xl' : 'bg-white border-blue-600 shadow-2xl') 
                 : (theme === 'dark' ? 'bg-[#0C0C0D] border-white/5' : 'bg-white border-transparent shadow-sm')

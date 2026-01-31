@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ArrowRight, ChevronDown, Rocket, Layers, Cpu } from 'lucide-react';
 
 interface HeroProps {
@@ -6,8 +6,18 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ theme }) => {
+  const heroRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    // Trigger first-screen staggered animation on mount (mobile-first)
+    const el = heroRef.current;
+    if (!el) return;
+    // small delay to allow paint, then add active to trigger CSS transitions
+    requestAnimationFrame(() => setTimeout(() => el.classList.add('active'), 40));
+  }, []);
+
   return (
-    <section className={`relative min-h-[95vh] flex flex-col justify-center overflow-hidden pt-20 ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}>
+    <section ref={heroRef} className={`hero-animate relative min-h-[95vh] flex flex-col justify-center overflow-hidden pt-20 ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}>
       {/* Background Orbs */}
       <div className="absolute top-[10%] right-[10%] w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none animate-pulse" />
       <div className="absolute bottom-[20%] left-[5%] w-72 h-72 bg-blue-400/5 rounded-full blur-[100px] pointer-events-none" />
@@ -21,7 +31,7 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
             Venture Studio Institutional Standard
           </div>
           
-          <h1 className={`text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8 leading-[1.05] ${
+          <h1 className={`h-title text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8 leading-[1.05] ${
             theme === 'dark' ? 'text-white' : 'text-slate-900'
           }`}>
             Building <br />
@@ -29,19 +39,19 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
             Digital Ventures
           </h1>
           
-          <p className={`text-xl md:text-2xl max-w-xl mb-14 leading-relaxed font-light ${
+          <p className={`h-sub text-xl md:text-2xl max-w-xl mb-14 leading-relaxed font-light ${
             theme === 'dark' ? 'text-slate-400' : 'text-slate-500'
           }`}>
             Synckraft Technologies architects, launches, and scales high-potential technology platforms through precision framework execution.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6">
-            <a href="#ecosystem" className="group px-10 py-5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg transition-all flex items-center justify-center gap-3 hover:shadow-[0_0_40px_rgba(37,99,235,0.4)] hover:-translate-y-1 w-full sm:w-auto text-center">
+            <a href="#ecosystem" className="h-cta group px-10 py-5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg transition-all flex items-center justify-center gap-3 hover:shadow-[0_0_40px_rgba(37,99,235,0.4)] hover:-translate-y-1 w-full sm:w-auto text-center touchable force-full-mobile">
               Explore Our Ventures <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
             </a>
-            <a href="#contact" className={`px-10 py-5 rounded-2xl border-2 font-bold text-lg transition-all text-center hover:-translate-y-1 w-full sm:w-auto ${
+            <a href="#contact" className={`h-cta px-10 py-5 rounded-2xl border-2 font-bold text-lg transition-all text-center hover:-translate-y-1 w-full sm:w-auto ${
               theme === 'dark' ? 'border-white/10 hover:bg-white/5 text-white' : 'border-slate-200 hover:bg-slate-50 text-slate-900'
-            }`}>
+            } touchable force-full-mobile`}>
               Partner With Us
             </a>
           </div>

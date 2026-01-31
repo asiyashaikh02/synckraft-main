@@ -42,3 +42,34 @@ section{padding-top:2.5rem;padding-bottom:2.5rem}
 
 /* Slightly reduce heavy motion (remove bounce by default) */
 .no-bounce{animation:none!important}
+
+/* Touchable feedback for buttons and interactive elements */
+.touchable{transition:transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease; -webkit-tap-highlight-color: transparent}
+.touchable:active{transform:scale(0.98);opacity:0.98}
+.touchable:focus-visible{transform:translateY(-1px)}
+
+/* Card tap elevation */
+.card-glow{transition:box-shadow 180ms ease, transform 180ms ease}
+.card-glow:active{transform:translateY(-4px) scale(1.01);box-shadow:0 12px 30px rgba(37,99,235,0.08)}
+
+/* Hero first-screen staggered animation (mobile-first) */
+.hero-animate .h-title, .hero-animate .h-sub, .hero-animate .h-cta{
+  opacity:0;transform:translateY(12px);
+}
+.hero-animate.active .h-title{
+  opacity:1;transform:translateY(0);transition:opacity 0.32s ease-out, transform 0.32s ease-out;
+}
+.hero-animate.active .h-sub{
+  opacity:1;transform:translateY(0);transition:opacity 0.28s ease-out 0.12s, transform 0.28s ease-out 0.12s;
+}
+.hero-animate.active .h-cta{
+  opacity:1;transform:translateY(0) scale(1);transition:opacity 0.28s ease-out 0.28s, transform 0.28s cubic-bezier(.2,.8,.2,1) 0.28s;transform-origin:center;
+}
+
+/* Ensure CTAs are full width on small screens consistently */
+@media (max-width: 767px){
+  .force-full-mobile{width:100% !important}
+  .hero-animate .h-title{font-size:2rem}
+  .hero-animate .h-sub{font-size:1rem}
+}
+

@@ -118,7 +118,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ theme }) => {
               <button 
                 disabled={status === 'submitting'}
                 type="submit" 
-                className={`w-full py-5 rounded-2xl bg-blue-600 text-white font-bold text-lg flex items-center justify-center gap-3 transition-all hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-900/20 active:scale-[0.98] disabled:opacity-50`}
+                className={`w-full py-5 rounded-2xl bg-blue-600 text-white font-bold text-lg flex items-center justify-center gap-3 transition-all hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-900/20 active:scale-[0.98] disabled:opacity-50 touchable`}
               >
                 {status === 'submitting' ? 'Processing...' : 'Submit Inquiry'}
                 <Send size={20} className={status === 'submitting' ? 'animate-pulse' : ''} />
