@@ -2,12 +2,17 @@
 :root{
   --synckraft-blue: #2563EB;
 }
+/* keep original synckraft accent token; no global color overrides here */
+
 html,body{
   scroll-behavior: smooth;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   overflow-x: hidden;
 }
+
+/* Selection color — monochrome */
+/* default selection preserved to theme styles (avoid global color overrides) */
 
 /* Reveal animation — faster, subtle, performant */
 .reveal{
@@ -19,6 +24,50 @@ html,body{
 .reveal.active{
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Elevation / shadow system (monochrome) */
+:root{
+  --shadow-ambient-light: rgba(0,0,0,0.06);
+  --shadow-sharp-light: rgba(0,0,0,0.08);
+  --shadow-ambient-dark: rgba(0,0,0,0.5);
+  --shadow-sharp-dark: rgba(0,0,0,0.65);
+}
+body.dark{
+  --shadow-ambient: var(--shadow-ambient-dark);
+  --shadow-sharp: var(--shadow-sharp-dark);
+}
+body:not(.dark){
+  --shadow-ambient: var(--shadow-ambient-light);
+  --shadow-sharp: var(--shadow-sharp-light);
+}
+
+.elev-1{
+  box-shadow: 0 1px 2px var(--shadow-sharp), 0 8px 20px var(--shadow-ambient);
+  border: 1px solid rgba(0,0,0,0.04);
+  transition: box-shadow 220ms ease-out, transform 220ms ease-out;
+}
+.elev-1:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow-sharp), 0 18px 40px var(--shadow-ambient);
+}
+
+.elev-2{
+  box-shadow: 0 6px 14px var(--shadow-sharp), 0 22px 60px var(--shadow-ambient);
+  transition: box-shadow 220ms ease-out, transform 220ms ease-out;
+}
+.elev-2:active{transform:translateY(0)}
+
+.elev-3{
+  box-shadow: 0 10px 30px var(--shadow-sharp), 0 30px 80px var(--shadow-ambient);
+  transition: box-shadow 200ms ease-out, transform 120ms cubic-bezier(.2,.8,.2,1);
+}
+.elev-3:active{transform:scale(0.985)}
+
+/* Remove infinite hero glow; replace with subtle static monochrome glow */
+.hero-glow{
+  position:absolute;right:8%;top:8%;width:20rem;height:20rem;border-radius:9999px;pointer-events:none;opacity:0.06;mix-blend-mode:screen;will-change:transform,opacity;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08), rgba(0,0,0,0.12) 40%, transparent 60%);
 }
 
 /* Accessibility focus states */

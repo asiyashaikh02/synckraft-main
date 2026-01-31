@@ -34,7 +34,7 @@ export const Pillars: React.FC<ThemeProps> = ({ theme }) => {
         
         <div className="grid lg:grid-cols-3 gap-10">
           {pillarData.map((pillar, index) => (
-            <div key={index} className={`group p-12 rounded-[3rem] border transition-all duration-500 hover:-translate-y-2 reveal card-glow ${
+            <div key={index} className={`group p-12 rounded-[3rem] border transition-all duration-500 hover:-translate-y-2 reveal card-glow elev-1 ${
               theme === 'dark' ? 'bg-[#111112] border-white/5 hover:border-blue-500/30' : 'bg-white border-slate-100 hover:border-blue-600/30'
             }`} style={{ transitionDelay: `${index * 0.1}s` }}>
               <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-10 transition-transform group-hover:scale-110 group-hover:rotate-6 ${

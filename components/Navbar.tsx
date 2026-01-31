@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
+import darkLogo from '../assets/logos/synckraft-dark.png';
+import lightLogo from '../assets/logos/synckraft-light.png';
 
 interface NavbarProps {
   theme: 'dark' | 'light';
@@ -29,13 +31,9 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
         : 'bg-transparent py-4'
     } ${scrolled ? 'py-4 shadow-xl' : 'py-8'}`}>
       <div className="max-w-7xl mx-auto px-8 flex justify-between items-center">
-        <a href="#" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center transform transition-all duration-300 group-hover:rotate-6">
-             <div className="w-4 h-4 bg-white rounded-sm rotate-45" />
-          </div>
-          <span className={`text-xl font-bold tracking-tight font-display ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
-            Sync<span className="text-blue-600">kraft</span>
-          </span>
+        <a href="/" className="flex items-center gap-3 group focus:outline-none" aria-label="Homepage">
+          <img src={lightLogo} alt="Synckraft Technologies Logo" className="block dark:hidden h-8 md:h-10 w-auto" />
+          <img src={darkLogo} alt="Synckraft Technologies Logo" className="hidden dark:block h-8 md:h-10 w-auto" />
         </a>
 
         {/* Desktop Nav */}

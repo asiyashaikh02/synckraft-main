@@ -1,5 +1,7 @@
 import React from 'react';
 import { Linkedin, Instagram, Facebook, MapPin, ChevronRight, Twitter, ExternalLink } from 'lucide-react';
+import lightLogo from '../assets/logos/synckraft-dark.png';
+import darkLogo from '../assets/logos/synckraft-light.png';
 
 interface ThemeProps {
   theme: 'dark' | 'light';
@@ -26,13 +28,14 @@ export const Footer: React.FC<ThemeProps> = ({ theme }) => {
         <div className="grid md:grid-cols-2 lg:grid-cols-12 gap-20 mb-32">
           <div className="lg:col-span-6">
             <div className="flex items-center gap-5 mb-12 group cursor-pointer">
-              <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center transform transition-all duration-500 group-hover:rotate-12 group-hover:scale-105 shadow-xl">
-                 <div className="w-6 h-6 bg-blue-600 rounded-sm rotate-45" />
-              </div>
+              <a href="/" className="inline-flex items-center gap-3 focus:outline-none" aria-label="Homepage">
+                <img src={lightLogo} alt="Synckraft Technologies Logo" className="block dark:hidden h-6 md:h-8 w-auto" />
+                <img src={darkLogo} alt="Synckraft Technologies Logo" className="hidden dark:block h-6 md:h-8 w-auto" />
+              </a>
               <div>
                 <span className="text-4xl font-bold tracking-tight font-display block leading-none">Synckraft</span>
                 <span className={`text-[10px] font-black uppercase tracking-[0.4em] mt-2 block opacity-60 ${
-                  theme === 'dark' ? 'text-blue-400' : 'text-blue-200'
+                  theme === 'dark' ? 'text-white/70' : 'text-black/60'
                 }`}>Venture Studio Institutional</span>
               </div>
             </div>

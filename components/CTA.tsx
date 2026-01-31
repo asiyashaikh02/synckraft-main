@@ -9,7 +9,7 @@ export const CTA: React.FC<ThemeProps> = ({ theme }) => {
   return (
     <section id="cta" className={`py-24 md:py-40 relative ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}>
       <div className="max-w-7xl mx-auto px-8 relative">
-        <div className={`relative rounded-[4rem] overflow-hidden p-8 sm:p-12 md:p-24 text-center reveal shadow-2xl ${
+        <div className={`relative rounded-[4rem] overflow-hidden p-8 sm:p-12 md:p-24 text-center reveal elev-3 ${
           theme === 'dark' ? 'bg-blue-600 shadow-blue-900/20' : 'bg-blue-600 shadow-blue-100'
         }`}>
           {/* Visual Overlay */}

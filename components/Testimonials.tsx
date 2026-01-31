@@ -34,7 +34,7 @@ export const Testimonials: React.FC = () => {
         </div>
         
         <div className="relative reveal">
-          <div className="p-12 md:p-16 rounded-[3rem] bg-blue-50/30 border border-blue-100 text-center relative">
+          <div className="p-12 md:p-16 rounded-[3rem] bg-blue-50/30 border border-blue-100 text-center relative elev-1">
              <Quote className="text-blue-200 absolute top-10 left-10" size={48} />
              <div className="min-h-[140px] flex flex-col justify-center items-center">
                 <p className="text-xl md:text-2xl text-slate-700 italic leading-relaxed mb-10 transition-all duration-500">
