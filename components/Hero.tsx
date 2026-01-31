@@ -18,9 +18,9 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
 
   return (
     <section ref={heroRef} className={`hero-animate relative min-h-[95vh] flex flex-col justify-center overflow-hidden pt-20 ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}>
-      {/* Background Orbs */}
-      <div className="absolute top-[10%] right-[10%] w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none animate-pulse" />
-      <div className="absolute bottom-[20%] left-[5%] w-72 h-72 bg-blue-400/5 rounded-full blur-[100px] pointer-events-none" />
+      {/* Background Glow (subtle, mobile-friendly) */}
+      <div className="hero-glow hidden md:block" aria-hidden="true" />
+      <div className="absolute bottom-[18%] left-[6%] w-72 h-72 bg-blue-400/5 rounded-full blur-[100px] pointer-events-none hidden sm:block" aria-hidden="true" />
 
       <div className="max-w-7xl mx-auto px-8 w-full grid lg:grid-cols-2 gap-16 items-center relative z-10">
         <div className="reveal">

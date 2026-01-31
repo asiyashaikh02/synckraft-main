@@ -12,8 +12,8 @@ html,body{
 /* Reveal animation — faster, subtle, performant */
 .reveal{
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: translateY(18px);
+  transition: opacity 0.42s ease-out, transform 0.42s ease-out;
   will-change: opacity, transform;
 }
 .reveal.active{
@@ -44,8 +44,8 @@ section{padding-top:2.5rem;padding-bottom:2.5rem}
 .no-bounce{animation:none!important}
 
 /* Touchable feedback for buttons and interactive elements */
-.touchable{transition:transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease; -webkit-tap-highlight-color: transparent}
-.touchable:active{transform:scale(0.98);opacity:0.98}
+.touchable{transition:transform 80ms ease, box-shadow 120ms ease, opacity 80ms ease; -webkit-tap-highlight-color: transparent}
+.touchable:active{transform:scale(0.975);opacity:0.985}
 .touchable:focus-visible{transform:translateY(-1px)}
 
 /* Card tap elevation */
@@ -82,4 +82,24 @@ section{padding-top:2.5rem;padding-bottom:2.5rem}
     opacity: 1 !important;
   }
 }
+
+/* Subtle hero background glow animation (lightweight) */
+.hero-glow{
+  position:absolute;right:8%;top:8%;width:20rem;height:20rem;border-radius:9999px;pointer-events:none;opacity:0.08;mix-blend-mode:screen;will-change:transform,opacity;
+  background: radial-gradient(circle at 30% 30%, rgba(37,99,235,0.9), rgba(56,189,248,0.6) 40%, transparent 60%);
+  transform:translate3d(0,0,0) scale(1);
+  animation: hero-glow-move 6s ease-in-out infinite;
+}
+@keyframes hero-glow-move{
+  0%{transform:translate3d(0,0,0) scale(1);opacity:0.06}
+  50%{transform:translate3d(-6px,-4px,0) scale(1.03);opacity:0.09}
+  100%{transform:translate3d(0,0,0) scale(1);opacity:0.06}
+}
+
+/* Section separators for subtle depth */
+.section-sep{position:relative}
+.section-sep:before{content:'';position:absolute;left:0;right:0;height:1px;bottom:100%;transform:translateY(12px);background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(37,99,235,0.04), rgba(255,255,255,0.02));pointer-events:none}
+
+/* Focus glow on inputs to aid touch navigation */
+input:focus, textarea:focus, select:focus{box-shadow:0 10px 30px rgba(37,99,235,0.06);border-color:rgba(37,99,235,0.5)}
 
