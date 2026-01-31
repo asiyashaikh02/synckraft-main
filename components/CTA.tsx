@@ -7,9 +7,9 @@ interface ThemeProps {
 
 export const CTA: React.FC<ThemeProps> = ({ theme }) => {
   return (
-    <section id="cta" className={`py-40 relative ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}>
+    <section id="cta" className={`py-24 md:py-40 relative ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}>
       <div className="max-w-7xl mx-auto px-8 relative">
-        <div className={`relative rounded-[4rem] overflow-hidden p-12 md:p-24 text-center reveal shadow-2xl ${
+        <div className={`relative rounded-[4rem] overflow-hidden p-8 sm:p-12 md:p-24 text-center reveal shadow-2xl ${
           theme === 'dark' ? 'bg-blue-600 shadow-blue-900/20' : 'bg-blue-600 shadow-blue-100'
         }`}>
           {/* Visual Overlay */}
@@ -27,7 +27,7 @@ export const CTA: React.FC<ThemeProps> = ({ theme }) => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
-               <a href="mailto:synckraft.me@gmail.com" className="group px-12 py-6 rounded-2xl bg-white text-blue-600 font-bold text-xl transition-all flex items-center gap-3 hover:shadow-2xl hover:-translate-y-1">
+               <a href="mailto:synckraft.me@gmail.com" className="group px-8 py-5 rounded-2xl bg-white text-blue-600 font-bold text-xl transition-all flex items-center gap-3 hover:shadow-2xl hover:-translate-y-1 w-full sm:w-auto justify-center text-center">
                  Start a Conversation <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform" />
                </a>
                <div className="flex items-center gap-3 text-blue-100 font-bold text-lg">

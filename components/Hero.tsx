@@ -21,7 +21,7 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
             Venture Studio Institutional Standard
           </div>
           
-          <h1 className={`text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8 leading-[1.05] ${
+          <h1 className={`text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8 leading-[1.05] ${
             theme === 'dark' ? 'text-white' : 'text-slate-900'
           }`}>
             Building <br />
@@ -36,10 +36,10 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6">
-            <a href="#ecosystem" className="group px-10 py-5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg transition-all flex items-center justify-center gap-3 hover:shadow-[0_0_40px_rgba(37,99,235,0.4)] hover:-translate-y-1">
+            <a href="#ecosystem" className="group px-10 py-5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg transition-all flex items-center justify-center gap-3 hover:shadow-[0_0_40px_rgba(37,99,235,0.4)] hover:-translate-y-1 w-full sm:w-auto text-center">
               Explore Our Ventures <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
             </a>
-            <a href="#contact" className={`px-10 py-5 rounded-2xl border-2 font-bold text-lg transition-all text-center hover:-translate-y-1 ${
+            <a href="#contact" className={`px-10 py-5 rounded-2xl border-2 font-bold text-lg transition-all text-center hover:-translate-y-1 w-full sm:w-auto ${
               theme === 'dark' ? 'border-white/10 hover:bg-white/5 text-white' : 'border-slate-200 hover:bg-slate-50 text-slate-900'
             }`}>
               Partner With Us
@@ -101,7 +101,7 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
         </div>
       </div>
 
-      <div className={`absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce ${theme === 'dark' ? 'text-slate-600' : 'text-slate-300'}`}>
+      <div className={`absolute bottom-10 left-1/2 -translate-x-1/2 reveal ${theme === 'dark' ? 'text-slate-600' : 'text-slate-300'}`}>
         <ChevronDown size={32} />
       </div>
     </section>

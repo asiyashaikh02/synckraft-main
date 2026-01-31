@@ -1,0 +1,44 @@
+/* Global mobile-first styles and subtle animation adjustments */
+:root{
+  --synckraft-blue: #2563EB;
+}
+html,body{
+  scroll-behavior: smooth;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x: hidden;
+}
+
+/* Reveal animation — faster, subtle, performant */
+.reveal{
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  will-change: opacity, transform;
+}
+.reveal.active{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Accessibility focus states */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+  outline: 3px solid rgba(37,99,235,0.14);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* Prevent accidental horizontal overflow from large cards */
+img,svg,iframe,video{max-width:100%;height:auto}
+
+/* Mobile-first spacing: increase vertical spacing and ensure buttons expand */
+section{padding-top:2.5rem;padding-bottom:2.5rem}
+@media(min-width:768px){
+  section{padding-top:6rem;padding-bottom:6rem}
+}
+
+/* Helper utility for full-width buttons on small screens */
+.full-mobile{width:100%}
+
+/* Slightly reduce heavy motion (remove bounce by default) */
+.no-bounce{animation:none!important}

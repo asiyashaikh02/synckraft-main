@@ -16,7 +16,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ theme }) => {
 
   if (status === 'success') {
     return (
-      <section id="contact" className={`py-32 flex items-center justify-center ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}>
+      <section id="contact" className={`py-20 flex items-center justify-center ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}>
         <div className="max-w-xl w-full px-8 text-center reveal active">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-600/10 text-blue-500 mb-8">
             <CheckCircle2 size={48} />
@@ -37,9 +37,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({ theme }) => {
   }
 
   return (
-    <section id="contact" className={`py-40 relative overflow-hidden ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}>
+    <section id="contact" className={`py-24 md:py-40 relative overflow-hidden ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}>
       <div className="max-w-7xl mx-auto px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-20">
+        <div className="grid md:grid-cols-2 gap-12">
           <div className="reveal">
             <h4 className="text-blue-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-8">Get In Touch</h4>
             <h2 className={`text-4xl md:text-6xl font-extrabold mb-10 tracking-tight leading-tight ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
@@ -57,7 +57,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ theme }) => {
           </div>
 
           <div className="reveal" style={{ transitionDelay: '0.2s' }}>
-            <form onSubmit={handleSubmit} className={`p-10 rounded-[3rem] border shadow-2xl ${
+            <form onSubmit={handleSubmit} className={`p-6 sm:p-10 rounded-[3rem] border shadow-2xl ${
               theme === 'dark' ? 'bg-[#111112] border-white/5 shadow-blue-900/10' : 'bg-white border-slate-100'
             }`}>
               <div className="grid sm:grid-cols-2 gap-6 mb-8">

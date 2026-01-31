@@ -14,7 +14,7 @@ export const Footer: React.FC<ThemeProps> = ({ theme }) => {
   ];
 
   return (
-    <footer id="footer" className={`pt-40 pb-12 relative overflow-hidden transition-colors duration-300 ${
+    <footer id="footer" className={`pt-24 md:pt-40 pb-12 relative overflow-hidden transition-colors duration-300 ${
       theme === 'dark' ? 'bg-[#080809] text-white' : 'bg-[#1E40AF] text-white'
     }`}>
       {/* Decorative Blur */}

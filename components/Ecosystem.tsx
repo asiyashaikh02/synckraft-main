@@ -46,9 +46,9 @@ export const Ecosystem: React.FC<ThemeProps> = ({ theme }) => {
   }, []);
 
   return (
-    <section id="ecosystem" className={`py-40 relative overflow-hidden ${theme === 'dark' ? 'bg-[#080809]' : 'bg-slate-50'}`}>
+    <section id="ecosystem" className={`py-24 md:py-40 relative overflow-hidden ${theme === 'dark' ? 'bg-[#080809]' : 'bg-slate-50'}`}>
       <div className="max-w-7xl mx-auto px-8 relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 mb-28 reveal">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 mb-20 reveal">
           <div className="max-w-2xl">
             <h4 className="text-blue-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-8">Venture Ecosystem</h4>
             <h2 className={`text-4xl md:text-6xl font-extrabold tracking-tight mb-8 leading-tight ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>Institutional <br />Holdings</h2>
@@ -76,7 +76,7 @@ export const Ecosystem: React.FC<ThemeProps> = ({ theme }) => {
           </div>
         </div>
         
-        <div className="grid lg:grid-cols-3 gap-10">
+        <div className="grid lg:grid-cols-3 gap-8">
           {ventures.map((venture, index) => (
             <div 
               key={index} 

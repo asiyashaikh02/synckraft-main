@@ -7,7 +7,7 @@ interface ThemeProps {
 
 export const About: React.FC<ThemeProps> = ({ theme }) => {
   return (
-    <section id="about" className={`py-40 relative overflow-hidden ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}>
+    <section id="about" className={`py-24 md:py-40 relative overflow-hidden ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}>
       <div className="max-w-7xl mx-auto px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-24 items-center">
           <div className="reveal">

@@ -25,7 +25,7 @@ const pillarData = [
 
 export const Pillars: React.FC<ThemeProps> = ({ theme }) => {
   return (
-    <section id="pillars" className={`py-40 ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}>
+    <section id="pillars" className={`py-24 md:py-40 ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}>
       <div className="max-w-7xl mx-auto px-8">
         <div className="text-center mb-28 reveal">
           <h4 className="text-blue-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-8">Our Core Framework</h4>
