@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
-import darkLogo from '../assets/logos/synckraft-dark.png';
-import lightLogo from '../assets/logos/synckraft-light.png';
+import lightLogo from '../assets/logos/synckraft-dark.png';
+import darkLogo from '../assets/logos/synckraft-light.png';
 
 interface NavbarProps {
   theme: 'dark' | 'light';

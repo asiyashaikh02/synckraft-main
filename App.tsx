@@ -44,7 +44,55 @@ export default function App() {
       document.body.className = 'dark';
     }
 
-    return () => observer.disconnect();
+    // Mobile touch interactions: tap, press & hold for tactile feedback
+    const supportsTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const touchableEls: Array<HTMLElement> = [];
+    const cardEls: Array<HTMLElement> = [];
+    const holdTimers = new WeakMap<HTMLElement, number>();
+
+    if (supportsTouch && !prefersReduced) {
+      document.querySelectorAll<HTMLElement>('.touchable').forEach((el) => {
+        const onStart = () => el.classList.add('pressed');
+        const onEnd = () => el.classList.remove('pressed');
+        el.addEventListener('touchstart', onStart, { passive: true });
+        el.addEventListener('touchend', onEnd);
+        el.addEventListener('touchcancel', onEnd);
+        touchableEls.push(el);
+      });
+
+      document.querySelectorAll<HTMLElement>('.card-glow').forEach((el) => {
+        const onStart = () => {
+          el.classList.add('pressing');
+          // if user holds >300ms, add hold state
+          const t = window.setTimeout(() => el.classList.add('hold'), 300);
+          holdTimers.set(el, t);
+        };
+        const onEnd = () => {
+          el.classList.remove('pressing');
+          el.classList.remove('hold');
+          const t = holdTimers.get(el);
+          if (t) { window.clearTimeout(t); holdTimers.delete(el); }
+        };
+        el.addEventListener('touchstart', onStart, { passive: true });
+        el.addEventListener('touchend', onEnd);
+        el.addEventListener('touchcancel', onEnd);
+        cardEls.push(el);
+      });
+    }
+
+    return () => {
+      observer.disconnect();
+      // clean up touch listeners
+      touchableEls.forEach((el) => {
+        el.classList.remove('pressed');
+        el.replaceWith(el.cloneNode(true) as HTMLElement);
+      });
+      cardEls.forEach((el) => {
+        el.classList.remove('pressing');
+        el.classList.remove('hold');
+        el.replaceWith(el.cloneNode(true) as HTMLElement);
+      });
+    };
   }, []);
 
   const toggleTheme = () => {
