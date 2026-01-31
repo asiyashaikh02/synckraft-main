@@ -13,11 +13,11 @@ export const About: React.FC<ThemeProps> = ({ theme }) => {
           <div className="reveal">
             <h4 className="text-blue-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-8">Our DNA</h4>
             <h2 className={`text-4xl md:text-6xl font-extrabold mb-10 leading-tight tracking-tight ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
-              Institutional-Grade <br />
-              <span className="text-slate-500 font-light italic">Execution Excellence</span>
+              Foundation with intent <br />
+              <span className="text-slate-500 font-light italic">Small start. Solid core.</span>
             </h2>
             <p className={`text-xl leading-relaxed mb-12 max-w-xl font-light ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
-              Synckraft operates as a strategic holding company. We don't just deliver products — we build structured, scalable, and sustainable digital business systems.
+              Synckraft is a strategic holding company. We don't just deliver products — we build structured, scalable, and sustainable digital systems.
             </p>
             
             <div className="grid sm:grid-cols-2 gap-10">
@@ -27,8 +27,8 @@ export const About: React.FC<ThemeProps> = ({ theme }) => {
                   }`}>
                     <Cpu size={24} />
                   </div>
-                  <h4 className={`font-bold text-lg mb-2 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>Architectural First</h4>
-                  <p className={`text-sm leading-relaxed ${theme === 'dark' ? 'text-slate-500' : 'text-slate-500'}`}>Engineered for extreme performance and multi-domain longevity.</p>
+                  <h4 className={`font-bold text-lg mb-2 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>Architecture First</h4>
+                  <p className={`text-sm leading-relaxed ${theme === 'dark' ? 'text-slate-500' : 'text-slate-500'}`}>Engineered for lasting performance and longevity.</p>
                </div>
                <div className="group">
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 transition-all duration-300 ${
@@ -37,7 +37,7 @@ export const About: React.FC<ThemeProps> = ({ theme }) => {
                     <ShieldCheck size={24} />
                   </div>
                   <h4 className={`font-bold text-lg mb-2 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>Holding Strategy</h4>
-                  <p className={`text-sm leading-relaxed ${theme === 'dark' ? 'text-slate-500' : 'text-slate-500'}`}>Every venture is a proprietary asset in our permanent portfolio.</p>
+                  <p className={`text-sm leading-relaxed ${theme === 'dark' ? 'text-slate-500' : 'text-slate-500'}`}>Every venture is a proprietary asset in our portfolio.</p>
                </div>
             </div>
           </div>

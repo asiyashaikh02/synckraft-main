@@ -28,7 +28,10 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
             theme === 'dark' ? 'bg-white/5 border-white/10 text-blue-400' : 'bg-blue-50 border-blue-100 text-blue-600'
           }`}>
             <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-ping" />
-            Venture Studio Institutional Standard
+            <div className="flex flex-col leading-tight">
+              <span className="font-bold tracking-[0.25em] uppercase">BUILDING WHAT MATTERS</span>
+              <span className="text-[11px] normal-case font-medium mt-1 opacity-80">Designing useful systems with intent, responsibility, and long-term value.</span>
+            </div>
           </div>
           
           <h1 className={`h-title text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8 leading-[1.05] ${
