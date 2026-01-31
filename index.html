@@ -4,6 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Synckraft Technologies | Building Scalable Digital Ventures</title>
+    <meta name="description" content="Synckraft Technologies architects, launches, and scales high-potential technology platforms through precision framework execution." />
+    <link rel="canonical" href="https://synckraft.me/" />
+    <!-- Open Graph -->
+    <meta property="og:title" content="Synckraft Technologies | Building Scalable Digital Ventures" />
+    <meta property="og:description" content="Synckraft Technologies architects, launches, and scales high-potential technology platforms through precision framework execution." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://synckraft.me/" />
+    <meta property="og:image" content="/og-image.png" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Synckraft Technologies | Building Scalable Digital Ventures" />
+    <meta name="twitter:description" content="Synckraft Technologies architects, launches, and scales high-potential technology platforms through precision framework execution." />
+    <meta name="twitter:image" content="/og-image.png" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,15 +51,9 @@
       body {
         transition: background-color 0.3s ease, color 0.3s ease;
       }
-      .reveal {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: all 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
-      }
-      .reveal.active {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      /* Reveal defaults (overridden by index.css for finer control) */
+      .reveal { opacity: 0; transform: translateY(20px); }
+      .reveal.active { opacity: 1; transform: translateY(0); }
       .card-glow:hover {
         box-shadow: 0 0 30px rgba(37, 99, 235, 0.15);
       }
@@ -70,6 +78,27 @@
         background: #2563EB;
       }
     </style>
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Synckraft Technologies",
+      "url": "https://synckraft.me/",
+      "logo": "https://synckraft.me/logo.png",
+      "sameAs": ["https://www.linkedin.com/","https://twitter.com/"],
+      "contactPoint": [{"@type":"ContactPoint","contactType":"customer support","email":"synckraft.me@gmail.com"}]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"WebSite",
+      "url":"https://synckraft.me/",
+      "name":"Synckraft Technologies",
+      "potentialAction": {"@type":"SearchAction","target":"https://synckraft.me/?s={search_term_string}","query-input":"required name=search_term_string"}
+    }
+    </script>
     <script type="importmap">
     {
       "imports": {

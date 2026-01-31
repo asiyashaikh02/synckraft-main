@@ -14,20 +14,26 @@ export default function App() {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   useEffect(() => {
-    // Reveal animation logic
-    const reveal = () => {
-      const reveals = document.querySelectorAll('.reveal');
-      reveals.forEach((element) => {
-        const windowHeight = window.innerHeight;
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 100;
-        if (elementTop < windowHeight - elementVisible) {
-          element.classList.add('active');
+    // Reveal animation logic via IntersectionObserver (better performance)
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reveals = Array.from(document.querySelectorAll('.reveal')) as HTMLElement[];
+    if (prefersReduced) {
+      // Respect reduced motion: activate all reveals immediately
+      reveals.forEach((el) => el.classList.add('active'));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target as HTMLElement;
+          el.classList.add('active');
+          obs.unobserve(el);
         }
       });
-    };
-    window.addEventListener('scroll', reveal);
-    reveal();
+    }, { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.06 });
+
+    reveals.forEach((el) => observer.observe(el));
 
     // Persist theme
     const savedTheme = localStorage.getItem('synckraft-theme') as 'dark' | 'light';
@@ -38,7 +44,7 @@ export default function App() {
       document.body.className = 'dark';
     }
 
-    return () => window.removeEventListener('scroll', reveal);
+    return () => observer.disconnect();
   }, []);
 
   const toggleTheme = () => {
@@ -50,8 +56,10 @@ export default function App() {
 
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#0A0A0B] text-slate-100' : 'bg-white text-slate-900'} selection:bg-blue-600/20`}>
-      <Navbar theme={theme} toggleTheme={toggleTheme} />
-      <main>
+      <header>
+        <Navbar theme={theme} toggleTheme={toggleTheme} />
+      </header>
+      <main role="main">
         <Hero theme={theme} />
         <About theme={theme} />
         <Pillars theme={theme} />

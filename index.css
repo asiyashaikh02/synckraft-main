@@ -73,3 +73,13 @@ section{padding-top:2.5rem;padding-bottom:2.5rem}
   .hero-animate .h-sub{font-size:1rem}
 }
 
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .hero-animate .h-title, .hero-animate .h-sub, .hero-animate .h-cta, .card-glow, .touchable {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
