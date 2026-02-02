@@ -53,8 +53,8 @@ export const Footer: React.FC<ThemeProps> = ({ theme }) => {
             
             <div className="flex flex-col gap-4">
               <span className="text-blue-300 text-[10px] font-black uppercase tracking-[0.3em] opacity-40">Direct Correspondence</span>
-              <a href="mailto:grow@synckraft.me" className="text-white hover:text-blue-300 transition-all font-bold text-2xl flex items-center gap-3 group">
-                grow@synckraft.me <ChevronRight size={24} className="group-hover:translate-x-2 transition-transform text-blue-400" />
+              <a href="mailto:grow@synckraft.in" className="text-white hover:text-blue-300 transition-all font-bold text-2xl flex items-center gap-3 group">
+                grow@synckraft.in <ChevronRight size={24} className="group-hover:translate-x-2 transition-transform text-blue-400" />
               </a>
             </div>
           </div>

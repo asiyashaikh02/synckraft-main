@@ -30,7 +30,7 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
             <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-ping" />
             <div className="flex flex-col leading-tight">
               <span className="font-bold tracking-[0.25em] uppercase">BUILDING WHAT MATTERS</span>
-              <span className="text-[11px] normal-case font-medium mt-1 opacity-80">Designing useful systems with intent, responsibility, and long-term value.</span>
+              <span className="text-[11px] normal-case font-medium mt-1 opacity-80"></span>
             </div>
           </div>
           
