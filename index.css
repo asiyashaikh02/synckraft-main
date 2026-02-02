@@ -161,8 +161,9 @@ input:focus, textarea:focus, select:focus{box-shadow:0 10px 30px rgba(37,99,235,
 
 /* Logo switching (public /logos) - CSS-only */
 .logo {
-  height: 36px;
+  height: 40px;
   width: auto;
+  transition: opacity 180ms ease, transform 180ms ease;
 }
 
 .logo-dark {
@@ -175,5 +176,14 @@ input:focus, textarea:focus, select:focus{box-shadow:0 10px 30px rgba(37,99,235,
 
 .dark .logo-dark {
   display: block;
+}
+
+/* Color-scheme guidance so native selects/options render appropriately in dark mode */
+:root{ color-scheme: light; }
+.dark, html.dark, body.dark { color-scheme: dark; }
+
+select, option {
+  color: inherit;
+  background: transparent;
 }
 

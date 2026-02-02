@@ -28,15 +28,12 @@ export const Footer: React.FC<ThemeProps> = ({ theme }) => {
             <div className="flex items-center gap-5 mb-12 group cursor-pointer">
               <a href="/" className="inline-flex items-center gap-3 focus:outline-none" aria-label="Homepage">
                 <img
-                  src="/logos/synckraft-light.png"
-                  className="logo logo-light"
+                  src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
+                  className="logo"
                   alt="Synckraft Logo"
-                />
-
-                <img
-                  src="/logos/synckraft-dark.png"
-                  className="logo logo-dark"
-                  alt="Synckraft Logo"
+                  width={180}
+                  height={44}
+                  loading="eager"
                 />
               </a>
               <div>
@@ -62,7 +59,7 @@ export const Footer: React.FC<ThemeProps> = ({ theme }) => {
           <div className="lg:col-span-3 lg:col-start-8">
             <h4 className="text-white font-black uppercase tracking-[0.3em] text-[11px] mb-12 opacity-40">Ecosystem</h4>
             <ul className="space-y-7 text-blue-100 font-bold text-sm tracking-wide">
-              <li><a href="https://solaroft.com" target="_blank" className="hover:text-blue-400 flex items-center gap-2 transition-colors">Solaroft Digital <ExternalLink size={14} className="opacity-30" /></a></li>
+              <li><a href="https://solaroft.com" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 flex items-center gap-2 transition-colors">Solaroft — Solar Panel Maintenance & Asset Care <ExternalLink size={14} className="opacity-30" /></a></li>
               <li><a href="#ecosystem" className="hover:text-blue-400 transition-colors">SolveItIndia</a></li>
               <li><a href="#ecosystem" className="hover:text-blue-400 transition-colors">Internal Labs</a></li>
               <li><a href="#pillars" className="hover:text-blue-400 transition-colors">Venture Strategy</a></li>

@@ -8,8 +8,11 @@ interface ThemeProps {
 const ventures = [
   { 
     title: "Solaroft", 
-    tag: "Software Engineering",
-    description: "Our primary technology flagship delivering bespoke enterprise automation and full-stack digital transformations.",
+    tag: "Green Energy Services",
+    description: `From precision installation support and scheduled cleaning to deep system health checks and long-term asset care, Solaroft manages solar systems for homes and businesses end-to-end.
+
+Your solar doesn’t just turn on —
+it performs, consistently.`,
     status: "Active Portfolio",
     isLive: true,
     link: "https://solaroft.com",
@@ -88,9 +91,9 @@ export const Ecosystem: React.FC<ThemeProps> = ({ theme }) => {
               style={{ transitionDelay: `${index * 0.15}s` }}
             >
               <div className="flex justify-between items-start mb-12">
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-6 ${
-                  venture.isLive ? 'bg-blue-600 text-white' : (theme === 'dark' ? 'bg-white/5 text-slate-600' : 'bg-slate-50 text-slate-300')
-                }`}>
+                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:translate-y-[-4px] group-hover:scale-105 transform-gpu will-change-transform ${
+                    venture.isLive ? 'bg-blue-600 text-white' : (theme === 'dark' ? 'bg-white/5 text-slate-600' : 'bg-slate-50 text-slate-300')
+                  }`}>
                   {venture.icon}
                 </div>
                 <div className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-[0.2em] border ${
@@ -108,6 +111,17 @@ export const Ecosystem: React.FC<ThemeProps> = ({ theme }) => {
               </div>
               
               <p className={`text-lg leading-relaxed mb-12 flex-grow font-light ${theme === 'dark' ? 'text-slate-500' : 'text-slate-500'}`}>{venture.description}</p>
+              {venture.title === 'Solaroft' && (
+                <ul className="mt-2 space-y-2 text-sm font-medium">
+                  <li>Trusted by 500+ customers</li>
+                  <li>Annual Maintenance Contracts (AMC)</li>
+                  <li>Solar cleaning & efficiency optimization</li>
+                  <li>Eco-friendly practices</li>
+                  <li>Certified solar technicians</li>
+                  <li>Up to 30% energy boost</li>
+                  <li>Residential & Commercial services</li>
+                </ul>
+              )}
               
               <div className={`pt-8 border-t mt-auto ${theme === 'dark' ? 'border-white/5' : 'border-slate-50'}`}>
                 {venture.isLive ? (

@@ -46,9 +46,12 @@ export default function App() {
     try {
       const savedTheme = (localStorage.getItem('theme') || localStorage.getItem('synckraft-theme') || 'dark') as 'dark' | 'light';
       document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+      // keep body in sync as some legacy CSS uses body.dark
+      if (document.body) document.body.classList.toggle('dark', savedTheme === 'dark');
       setTheme(savedTheme);
     } catch (e) {
       document.documentElement.classList.toggle('dark', true);
+      if (document.body) document.body.classList.toggle('dark', true);
       setTheme('dark');
     }
 
@@ -110,6 +113,7 @@ export default function App() {
       localStorage.setItem('theme', newTheme);
     } catch (e) {}
     document.documentElement.classList.toggle('dark', newTheme === 'dark');
+    if (document.body) document.body.classList.toggle('dark', newTheme === 'dark');
   };
 
   return (
