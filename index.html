@@ -44,6 +44,17 @@
         }
       }
     </script>
+    <!-- Pre-render theme setter: ensures correct .dark class before React mounts -->
+    <script>
+      (function(){
+        try {
+          var t = localStorage.getItem('theme') || localStorage.getItem('synckraft-theme') || 'dark';
+          document.documentElement.classList.toggle('dark', t === 'dark');
+        } catch (e) {
+          /* ignore */
+        }
+      })();
+    </script>
     <style>
       :root {
         --synckraft-blue: #2563EB;

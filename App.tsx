@@ -11,7 +11,14 @@ import { CTA } from './components/CTA';
 import { Footer } from './components/Footer';
 
 export default function App() {
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    try {
+      if (typeof window === 'undefined') return 'dark';
+      return (localStorage.getItem('theme') || localStorage.getItem('synckraft-theme') || 'dark') as 'dark' | 'light';
+    } catch (e) {
+      return 'dark';
+    }
+  });
 
   useEffect(() => {
     // Reveal animation logic via IntersectionObserver (better performance)
@@ -35,13 +42,14 @@ export default function App() {
 
     reveals.forEach((el) => observer.observe(el));
 
-    // Persist theme
-    const savedTheme = localStorage.getItem('synckraft-theme') as 'dark' | 'light';
-    if (savedTheme) {
+    // Ensure theme is synced from storage and applied to the root element
+    try {
+      const savedTheme = (localStorage.getItem('theme') || localStorage.getItem('synckraft-theme') || 'dark') as 'dark' | 'light';
+      document.documentElement.classList.toggle('dark', savedTheme === 'dark');
       setTheme(savedTheme);
-      document.body.className = savedTheme;
-    } else {
-      document.body.className = 'dark';
+    } catch (e) {
+      document.documentElement.classList.toggle('dark', true);
+      setTheme('dark');
     }
 
     // Mobile touch interactions: tap, press & hold for tactile feedback
@@ -98,8 +106,10 @@ export default function App() {
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(newTheme);
-    localStorage.setItem('synckraft-theme', newTheme);
-    document.body.className = newTheme;
+    try {
+      localStorage.setItem('theme', newTheme);
+    } catch (e) {}
+    document.documentElement.classList.toggle('dark', newTheme === 'dark');
   };
 
   return (
