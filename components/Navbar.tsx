@@ -31,12 +31,13 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
       <div className="max-w-7xl mx-auto px-8 flex justify-between items-center">
         <a href="/" className="flex items-center gap-3 group focus:outline-none" aria-label="Homepage">
           <img
-            src="/assets/logos/synckraft-light.png"
+            src="/logos/synckraft-light.png"
             className="logo logo-light"
             alt="Synckraft Logo"
           />
+
           <img
-            src="/assets/logos/synckraft-dark.png"
+            src="/logos/synckraft-dark.png"
             className="logo logo-dark"
             alt="Synckraft Logo"
           />

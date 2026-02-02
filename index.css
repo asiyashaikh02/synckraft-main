@@ -159,19 +159,14 @@ section{padding-top:2.5rem;padding-bottom:2.5rem}
 /* Focus glow on inputs to aid touch navigation */
 input:focus, textarea:focus, select:focus{box-shadow:0 10px 30px rgba(37,99,235,0.06);border-color:rgba(37,99,235,0.5)}
 
-/* Logo theme switching (pure CSS - no JS conditions) */
+/* Logo switching (public /logos) - CSS-only */
+.logo {
+  height: 36px;
+  width: auto;
+}
+
 .logo-dark {
   display: none;
-}
-
-.logo {
-  display: inline-block;
-  width: auto;
-  height: 2rem; /* mobile-friendly default */
-}
-
-@media (min-width: 768px) {
-  .logo { height: 2.5rem; }
 }
 
 .dark .logo-light {

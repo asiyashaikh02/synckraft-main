@@ -1,7 +1,5 @@
 import React from 'react';
 import { Linkedin, Instagram, Facebook, MapPin, ChevronRight, Twitter, ExternalLink } from 'lucide-react';
-import lightLogo from '../assets/logos/synckraft-dark.png';
-import darkLogo from '../assets/logos/synckraft-light.png';
 
 interface ThemeProps {
   theme: 'dark' | 'light';
@@ -29,8 +27,17 @@ export const Footer: React.FC<ThemeProps> = ({ theme }) => {
           <div className="lg:col-span-6">
             <div className="flex items-center gap-5 mb-12 group cursor-pointer">
               <a href="/" className="inline-flex items-center gap-3 focus:outline-none" aria-label="Homepage">
-                <img src={lightLogo} alt="Synckraft Technologies Logo" className="block dark:hidden h-6 md:h-8 w-auto" />
-                <img src={darkLogo} alt="Synckraft Technologies Logo" className="hidden dark:block h-6 md:h-8 w-auto" />
+                <img
+                  src="/logos/synckraft-light.png"
+                  className="logo logo-light"
+                  alt="Synckraft Logo"
+                />
+
+                <img
+                  src="/logos/synckraft-dark.png"
+                  className="logo logo-dark"
+                  alt="Synckraft Logo"
+                />
               </a>
               <div>
                 <span className="text-4xl font-bold tracking-tight font-display block leading-none">Synckraft</span>
