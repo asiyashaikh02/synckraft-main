@@ -83,15 +83,14 @@ export const Ecosystem: React.FC<ThemeProps> = ({ theme }) => {
           {ventures.map((venture, index) => (
             <div 
               key={index} 
-              className={`group p-8 sm:p-12 rounded-[3.5rem] border transition-all duration-700 h-full flex flex-col reveal card-glow touchable elev-1 ${
+              className={`group p-8 sm:p-12 rounded-[3.5rem] border transition-transform transition-shadow transition-colors duration-200 ease-out h-full flex flex-col reveal card-glow touchable elev-1 hover:shadow-xl ${
                 index === currentIndex 
                 ? (theme === 'dark' ? 'bg-[#111112] border-blue-600/50 shadow-2xl' : 'bg-white border-blue-600 shadow-2xl') 
                 : (theme === 'dark' ? 'bg-[#0C0C0D] border-white/5' : 'bg-white border-transparent shadow-sm')
               }`}
-              style={{ transitionDelay: `${index * 0.15}s` }}
             >
               <div className="flex justify-between items-start mb-12">
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:translate-y-[-4px] group-hover:scale-105 transform-gpu will-change-transform ${
+                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transition-transform duration-200 ease-out transform-gpu group-hover:-translate-y-1 group-hover:shadow-xl will-change-transform ${
                     venture.isLive ? 'bg-blue-600 text-white' : (theme === 'dark' ? 'bg-white/5 text-slate-600' : 'bg-slate-50 text-slate-300')
                   }`}>
                   {venture.icon}
@@ -107,7 +106,12 @@ export const Ecosystem: React.FC<ThemeProps> = ({ theme }) => {
               
               <div className="mb-4">
                  <span className="text-[10px] font-bold text-blue-500/60 uppercase tracking-widest">{venture.tag}</span>
-                 <h3 className={`text-3xl font-bold mt-1 mb-6 group-hover:text-blue-500 transition-colors ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{venture.title}</h3>
+                 <h3 className={`text-3xl font-bold mt-1 mb-3 group-hover:text-blue-500 transition-colors ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{venture.title}</h3>
+                 {venture.title === 'Solaroft' && (
+                   <div className={`text-sm font-semibold mb-4 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                     Solar AMC • Cleaning • Maintenance • Efficiency Optimization
+                   </div>
+                 )}
               </div>
               
               <p className={`text-lg leading-relaxed mb-12 flex-grow font-light ${theme === 'dark' ? 'text-slate-500' : 'text-slate-500'}`}>{venture.description}</p>
@@ -125,8 +129,8 @@ export const Ecosystem: React.FC<ThemeProps> = ({ theme }) => {
               
               <div className={`pt-8 border-t mt-auto ${theme === 'dark' ? 'border-white/5' : 'border-slate-50'}`}>
                 {venture.isLive ? (
-                  <a href={venture.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-blue-500 font-bold text-sm uppercase tracking-[0.15em] group/link">
-                    Explore Venture <ArrowUpRight size={20} className="transition-transform group-hover/link:translate-x-1 group-hover/link:-translate-y-1" />
+                  <a href={venture.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-blue-500 font-bold text-sm uppercase tracking-[0.15em] group/link transition-colors">
+                    Explore Venture <ArrowUpRight size={20} className="transition-transform group-hover/link:-translate-y-1" />
                   </a>
                 ) : (
                   <div className="flex items-center gap-3 text-slate-600 font-bold text-sm uppercase tracking-[0.15em] italic">
