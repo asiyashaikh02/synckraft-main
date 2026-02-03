@@ -29,9 +29,9 @@ export const Footer: React.FC<ThemeProps> = ({ theme }) => {
               <a href="/" className="inline-flex items-center gap-3 focus:outline-none" aria-label="Homepage">
                 <img
                   src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
-                  className="logo"
+                  className="logo w-[140px] md:w-[160px] lg:w-[160px] h-auto"
                   alt="Synckraft Logo"
-                  width={100}
+                  width={160}
                   height={40}
                   loading="eager"
                 />

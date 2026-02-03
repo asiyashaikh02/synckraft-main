@@ -161,8 +161,9 @@ input:focus, textarea:focus, select:focus{box-shadow:0 10px 30px rgba(37,99,235,
 
 /* Logo switching (public /logos) - CSS-only */
 .logo {
-  height: 40px;
+  height: auto;
   width: auto;
+  max-width: 100%;
   transition: opacity 180ms ease, transform 180ms ease;
 }
 
