@@ -19,7 +19,7 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
   return (
     <section
       ref={heroRef}
-      className={`hero-animate relative w-full flex flex-col justify-center overflow-hidden pt-6 sm:pt-12 md:pt-20 md:min-h-[calc(100svh-4rem)] lg:min-h-[95vh] ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}
+      className={`hero-animate relative w-full flex flex-col justify-start overflow-hidden pt-[calc(var(--header-height)+24px)] md:pt-[calc(var(--header-height)+40px)] lg:pt-[calc(var(--header-height)+56px)] pb-24 ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}
     >
       {/* Background Glow (subtle, mobile-friendly) */}
       <div className="hero-glow hidden md:block" aria-hidden="true" />

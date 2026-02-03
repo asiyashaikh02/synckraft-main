@@ -23,19 +23,19 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 h-16 py-4 ${
-      scrolled 
-        ? (theme === 'dark' ? 'bg-[#0A0A0B]/80 glass-nav border-b border-white/5 shadow-xl' : 'bg-white/80 glass-nav border-b border-slate-200 shadow-xl') 
+    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 h-[64px] ${
+      scrolled
+        ? (theme === 'dark' ? 'bg-[#0A0A0B]/80 glass-nav border-b border-white/5 shadow-xl' : 'bg-white/80 glass-nav border-b border-slate-200 shadow-xl')
         : 'bg-transparent'
     }`}>
-      <div className="max-w-7xl mx-auto px-8 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-8 h-full flex justify-between items-center">
         <a href="/" className="flex items-center gap-3 group focus:outline-none" aria-label="Homepage">
           <img
             src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
-            className="logo w-[200px] md:w-[200px] lg:w-[180px] h-auto"
+            className="logo w-[160px] sm:w-[180px] lg:w-[210px] h-auto"
             alt="Synckraft Logo"
-            width={1000}
-            height={500}
+            width={210}
+            height={56}
             loading="eager"
           />
         </a>

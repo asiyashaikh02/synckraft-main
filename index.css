@@ -1,6 +1,7 @@
 /* Global mobile-first styles and subtle animation adjustments */
 :root{
   --synckraft-blue: #2563EB;
+  --header-height: 64px;
 }
 /* keep original synckraft accent token; no global color overrides here */
 
