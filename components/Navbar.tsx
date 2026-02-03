@@ -209,7 +209,6 @@
 //   );
 // };
 
-
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 
@@ -233,35 +232,36 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
       <header 
         className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
           scrolled 
-            ? (theme === 'dark' ? 'bg-black/80 border-b border-white/10' : 'bg-white/80 border-b border-slate-200') 
-            : 'bg-transparent py-2'
+            ? (theme === 'dark' ? 'bg-black/90 border-b border-white/10 py-2' : 'bg-white/90 border-b border-slate-200 py-2') 
+            : 'bg-transparent py-4'
         }`} 
         style={{ backdropFilter: 'blur(12px)' }}
       >
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          {/* LARGER LOGO */}
-          <a href="/" className="flex items-center group transition-transform hover:scale-105">
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          {/* MUCH LARGER LOGO SIZING */}
+          <a href="/" className="flex items-center group transition-transform duration-300 hover:scale-105">
             <img
               src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
-              className="h-10 sm:h-12 w-auto object-contain"
+              className="h-12 sm:h-14 md:h-16 w-auto object-contain" 
               alt="Synckraft Logo"
             />
           </a>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             <button 
               onClick={toggleTheme}
-              className={`p-2 rounded-xl transition-colors ${theme === 'dark' ? 'hover:bg-white/5 text-slate-400' : 'hover:bg-slate-100 text-slate-600'}`}
+              className={`p-2.5 rounded-xl transition-colors ${theme === 'dark' ? 'hover:bg-white/5 text-slate-400' : 'hover:bg-slate-100 text-slate-600'}`}
+              aria-label="Toggle Theme"
             >
-              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+              {theme === 'dark' ? <Sun size={22} /> : <Moon size={22} />}
             </button>
             
-            <a href="#contact" className="hidden sm:block px-6 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-all shadow-lg shadow-blue-600/20">
+            <a href="#contact" className="hidden sm:block px-7 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-all shadow-lg shadow-blue-600/20 active:scale-95">
               Partner With Us
             </a>
 
-            <button className="lg:hidden p-2" onClick={() => setIsOpen(!isOpen)}>
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
+            <button className="lg:hidden p-2 text-current" onClick={() => setIsOpen(!isOpen)}>
+              {isOpen ? <X size={32} /> : <Menu size={32} />}
             </button>
           </div>
         </div>
@@ -269,10 +269,12 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
 
       {/* Mobile Menu Overlay */}
       {isOpen && (
-        <div className={`fixed inset-0 z-[90] lg:hidden flex flex-col justify-center items-center gap-8 ${theme === 'dark' ? 'bg-black' : 'bg-white'}`}>
-           <a href="#ecosystem" className="text-2xl font-bold" onClick={() => setIsOpen(false)}>Venture Ecosystem</a>
-           <a href="#pillars" className="text-2xl font-bold" onClick={() => setIsOpen(false)}>Incubation Strategy</a>
-           <a href="#contact" className="px-8 py-4 rounded-full bg-blue-600 text-white font-bold">Partner With Us</a>
+        <div className={`fixed inset-0 z-[90] lg:hidden flex flex-col justify-center items-center gap-10 animate-in fade-in duration-300 ${
+          theme === 'dark' ? 'bg-[#0A0A0B] text-white' : 'bg-white text-slate-900'
+        }`}>
+           <a href="#ecosystem" className="text-3xl font-bold hover:text-blue-500 transition-colors" onClick={() => setIsOpen(false)}>Venture Ecosystem</a>
+           <a href="#pillars" className="text-3xl font-bold hover:text-blue-500 transition-colors" onClick={() => setIsOpen(false)}>Incubation Strategy</a>
+           <a href="#contact" className="px-10 py-5 rounded-full bg-blue-600 text-white text-xl font-bold shadow-2xl shadow-blue-600/40" onClick={() => setIsOpen(false)}>Partner With Us</a>
         </div>
       )}
     </>
