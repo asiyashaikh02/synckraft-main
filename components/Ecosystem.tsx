@@ -16,7 +16,7 @@ it performs, consistently.`,
     status: "Active Portfolio",
     isLive: true,
     link: "https://solaroft.com",
-    icon: <Globe size={28} />
+    icon: Globe
   },
   { 
     title: "SolveItIndia", 
@@ -25,7 +25,7 @@ it performs, consistently.`,
     status: "Upcoming Venture",
     isLive: false,
     link: "#",
-    icon: <Zap size={28} />
+    icon: Zap
   },
   { 
     title: "Internal Labs", 
@@ -34,7 +34,7 @@ it performs, consistently.`,
     status: "In Development",
     isLive: false,
     link: "#",
-    icon: <LayoutGrid size={28} />
+    icon: LayoutGrid
   }
 ];
 
@@ -90,10 +90,10 @@ export const Ecosystem: React.FC<ThemeProps> = ({ theme }) => {
                 : 'min-h-[220px] lg:min-h-[220px] h-full'
               }`}>
               <div className="flex justify-between items-start mb-12">
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transition-transform duration-200 ease-out transform-gpu group-hover:-translate-y-1 group-hover:shadow-xl will-change-transform ${
+                <div className={`${venture.title === 'Solaroft' ? 'w-[72px] h-[72px]' : 'w-16 h-16'} rounded-2xl flex items-center justify-center shadow-lg transition-transform duration-200 ease-out transform-gpu group-hover:-translate-y-1 group-hover:shadow-xl will-change-transform ${
                     venture.isLive ? 'bg-blue-600 text-white' : (theme === 'dark' ? 'bg-white/5 text-slate-600' : 'bg-slate-50 text-slate-300')
                   }`}>
-                  {venture.icon}
+                  <venture.icon size={venture.title === 'Solaroft' ? 33 : 28} />
                 </div>
                 <div className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-[0.2em] border ${
                   venture.isLive 
