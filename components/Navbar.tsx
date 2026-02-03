@@ -32,7 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
         <a href="/" className="flex items-center gap-3 group focus:outline-none" aria-label="Homepage">
           <img
             src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
-            className="logo w-[140px] md:w-[160px] lg:w-[180px] h-auto"
+            className="logo w-[200px] md:w-[200px] lg:w-[180px] h-auto"
             alt="Synckraft Logo"
             width={1000}
             height={500}
