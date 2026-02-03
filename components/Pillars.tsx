@@ -34,10 +34,10 @@ export const Pillars: React.FC<ThemeProps> = ({ theme }) => {
         
         <div className="grid lg:grid-cols-3 gap-10">
           {pillarData.map((pillar, index) => (
-            <div key={index} className={`group p-12 rounded-[3rem] border transition-all duration-500 hover:-translate-y-2 reveal card-glow elev-1 ${
+            <div key={index} className={`group p-12 rounded-[3rem] border transition-transform transition-shadow duration-200 ease-out -translate-y-0 reveal card-glow elev-1 ${
               theme === 'dark' ? 'bg-[#111112] border-white/5 hover:border-blue-500/30' : 'bg-white border-slate-100 hover:border-blue-600/30'
-            }`} style={{ transitionDelay: `${index * 0.1}s` }}>
-              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-10 transition-transform group-hover:scale-110 group-hover:rotate-6 ${
+            }`}>
+              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-10 transition-transform duration-200 ease-out transform-gpu group-hover:-translate-y-1 group-hover:shadow-lg ${
                 theme === 'dark' ? 'bg-blue-600/10 text-blue-500' : 'bg-blue-50 text-blue-600'
               }`}>
                 <pillar.icon size={32} />
@@ -45,7 +45,7 @@ export const Pillars: React.FC<ThemeProps> = ({ theme }) => {
               <h3 className={`text-2xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{pillar.title}</h3>
               <p className={`text-lg leading-relaxed mb-10 font-light ${theme === 'dark' ? 'text-slate-400' : 'text-slate-500'}`}>{pillar.description}</p>
               
-              <div className="flex items-center gap-2 text-blue-500 font-bold text-sm uppercase tracking-widest cursor-pointer hover:gap-3 transition-all group-hover:text-blue-400">
+              <div className="flex items-center gap-2 text-blue-500 font-bold text-sm uppercase tracking-widest cursor-pointer hover:gap-3 transition-all">
                 Explore Logic <ChevronRight size={18} />
               </div>
             </div>

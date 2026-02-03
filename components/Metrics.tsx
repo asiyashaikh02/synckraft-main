@@ -38,12 +38,12 @@ const Counter: React.FC<{ end: number; suffix?: string; title: string; theme: st
 
   return (
     <div ref={ref} className="text-center group reveal py-10">
-      <div className={`text-6xl md:text-8xl font-extrabold font-display mb-6 group-hover:text-blue-500 transition-all duration-500 tracking-tighter ${
+      <div className={`text-6xl md:text-8xl font-extrabold font-display mb-6 group-hover:text-blue-500 transition-colors duration-200 tracking-tighter ${
         theme === 'dark' ? 'text-white' : 'text-slate-900'
       }`}>
         {count}{suffix}
       </div>
-      <div className="w-10 h-1 bg-blue-600 mx-auto mb-8 transform transition-transform group-hover:scale-x-[2.5]" />
+      <div className="w-10 group-hover:w-24 h-1 bg-blue-600 mx-auto mb-8 transition-all duration-200 ease-out" />
       <div className="text-slate-500 uppercase tracking-[0.3em] text-[10px] font-black">{title}</div>
     </div>
   );

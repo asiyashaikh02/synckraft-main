@@ -62,7 +62,7 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
 
         <div className="hidden lg:flex justify-center items-center reveal" style={{ transitionDelay: '0.2s' }}>
           <div className="relative w-full max-w-xl aspect-square">
-            <div className={`absolute inset-0 rounded-[5rem] rotate-3 transform scale-105 ${theme === 'dark' ? 'bg-blue-600/5' : 'bg-blue-600/5'}`} />
+            <div className={`absolute inset-0 rounded-[5rem] rotate-3 transform ${theme === 'dark' ? 'bg-blue-600/5' : 'bg-blue-600/5'}`} />
             <div className={`absolute inset-0 border rounded-[5rem] shadow-2xl flex items-center justify-center overflow-hidden animate-float ${
               theme === 'dark' ? 'bg-[#111112] border-white/5' : 'bg-white border-slate-100'
             }`}>

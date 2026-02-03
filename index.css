@@ -93,12 +93,12 @@ section{padding-top:2.5rem;padding-bottom:2.5rem}
 .no-bounce{animation:none!important}
 
 /* Touchable feedback for buttons and interactive elements */
-.touchable{transition:transform 80ms ease, box-shadow 120ms ease, opacity 80ms ease; -webkit-tap-highlight-color: transparent}
-.touchable:active{transform:scale(0.975);opacity:0.985}
+.touchable{transition:transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease; -webkit-tap-highlight-color: transparent}
+.touchable:active{transform:translateY(1px);opacity:0.98}
 .touchable:focus-visible{transform:translateY(-1px)}
 
-/* JS-driven pressed state for immediate tactile feedback on touch */
-.touchable.pressed{transform:scale(0.97) !important;opacity:0.95 !important;transition:transform 120ms cubic-bezier(.2,.8,.2,1)}
+/* JS-driven pressed state for immediate tactile feedback on touch - no scaling, only translateY */
+.touchable.pressed{transform:translateY(2px) !important;opacity:0.95 !important;transition:transform 120ms cubic-bezier(.2,.8,.2,1)}
 
 /* Card tap elevation */
 .card-glow{transition:box-shadow 180ms ease, transform 180ms ease}
@@ -143,13 +143,13 @@ section{padding-top:2.5rem;padding-bottom:2.5rem}
 .hero-glow{
   position:absolute;right:8%;top:8%;width:20rem;height:20rem;border-radius:9999px;pointer-events:none;opacity:0.08;mix-blend-mode:screen;will-change:transform,opacity;
   background: radial-gradient(circle at 30% 30%, rgba(37,99,235,0.9), rgba(56,189,248,0.6) 40%, transparent 60%);
-  transform:translate3d(0,0,0) scale(1);
+  transform:translate3d(0,0,0);
   animation: hero-glow-move 6s ease-in-out infinite;
 }
 @keyframes hero-glow-move{
-  0%{transform:translate3d(0,0,0) scale(1);opacity:0.06}
-  50%{transform:translate3d(-6px,-4px,0) scale(1.03);opacity:0.09}
-  100%{transform:translate3d(0,0,0) scale(1);opacity:0.06}
+  0%{transform:translate3d(0,0,0);opacity:0.06}
+  50%{transform:translate3d(-6px,-4px,0);opacity:0.09}
+  100%{transform:translate3d(0,0,0);opacity:0.06}
 }
 
 /* Section separators for subtle depth */
