@@ -19,49 +19,26 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
   return (
     <section
       ref={heroRef}
-      className={`hero-animate relative w-full flex flex-col justify-center overflow-hidden pt-6 sm:pt-12 md:pt-20 md:min-h-[calc(100svh-4rem)] lg:min-h-[95vh] ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}
+      className={`hero-animate relative w-full overflow-hidden pt-[calc(var(--header-height)+24px)] sm:pt-[calc(var(--header-height)+32px)] md:pt-[calc(var(--header-height)+40px)] lg:pt-[calc(var(--header-height)+56px)] pb-24 ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}
     >
-      {/* Background Glow (subtle, mobile-friendly) */}
-      <div className="hero-glow hidden md:block" aria-hidden="true" />
-      <div className="absolute bottom-[18%] left-[6%] w-72 h-72 bg-blue-400/5 rounded-full blur-[100px] pointer-events-none hidden sm:block" aria-hidden="true" />
 
       <div className="max-w-7xl mx-auto px-8 w-full grid lg:grid-cols-2 gap-16 items-start relative z-10">
         <div className="reveal">
-          <div
-            className={`inline-flex items-center gap-3 px-4 py-1.5 rounded-full border text-[11px] font-bold tracking-[0.25em] uppercase mb-6 ${
-              theme === 'dark' ? 'bg-white/5 border-white/10 text-blue-400' : 'bg-blue-50 border-blue-100 text-blue-600'
-            }`}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-ping" />
-            <div className="flex flex-col leading-tight">
-              <span className="font-bold tracking-[0.25em] uppercase">BUILDING WHAT MATTERS</span>
-              <span className="text-[11px] normal-case font-medium mt-1 opacity-80"></span>
-            </div>
+          <div className={`mt-2 inline-flex rounded-full px-4 py-2 text-xs tracking-widest text-blue-400 bg-white/5 ${theme === 'dark' ? 'border-white/10' : ''}`}>
+            BUILDING WHAT MATTERS
           </div>
           
-          <h1
-            className={`h-title text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8 leading-[1.05] ${
-              theme === 'dark' ? 'text-white' : 'text-slate-900'
-            }`}
-          >
-            Building <br />
-            <span className="text-blue-600">Scalable</span> <br />
+          <h1 className={`mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
+            Building <span className="text-blue-500">Scalable</span><br />
             Digital Ventures
           </h1>
           
-          <p
-            className={`h-sub text-xl md:text-2xl max-w-xl mb-14 leading-relaxed font-light ${
-              theme === 'dark' ? 'text-slate-400' : 'text-slate-500'
-            }`}
-          >
+          <p className={`mt-5 text-sm sm:text-base text-gray-400 max-w-xl`}>
             Synckraft Technologies architects, launches, and scales high-potential technology platforms through precision framework execution.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6">
-            <a
-              href="#ecosystem"
-              className="h-cta group px-10 py-5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg transition-all flex items-center justify-center gap-3 hover:shadow-[0_0_40px_rgba(37,99,235,0.4)] hover:-translate-y-1 w-full sm:w-auto text-center touchable force-full-mobile"
-            >
+            <a href="#ecosystem" className="h-cta group px-10 py-5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg transition-all flex items-center justify-center gap-3 hover:shadow-[0_0_40px_rgba(37,99,235,0.4)] w-full sm:w-auto text-center touchable force-full-mobile">
               Explore Our Ventures <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
             </a>
             <a
@@ -76,14 +53,9 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
         </div>
 
         <div className="hidden lg:flex justify-center items-center reveal" style={{ transitionDelay: '0.2s' }}>
-          <div className="relative w-full max-w-xl aspect-square">
-            <div className={`absolute inset-0 rounded-[5rem] rotate-3 transform ${theme === 'dark' ? 'bg-blue-600/5' : 'bg-blue-600/5'}`} />
-            <div
-              className={`absolute inset-0 border rounded-[5rem] shadow-2xl flex items-center justify-center overflow-hidden animate-float ${
-                theme === 'dark' ? 'bg-[#111112] border-white/5' : 'bg-white border-slate-100'
-              }`}
-            >
-               <div className="relative w-full h-full p-16 flex flex-col justify-between">
+          <div className="w-full max-w-xl">
+            <div className={`rounded-[1.25rem] border shadow-2xl overflow-hidden ${theme === 'dark' ? 'bg-[#111112] border-white/5' : 'bg-white border-slate-100'}`}>
+               <div className="w-full h-full p-8 flex flex-col justify-between">
                   <div className="flex justify-between items-start">
                      <div className="w-20 h-20 rounded-3xl bg-blue-600/10 flex items-center justify-center text-blue-600 shadow-inner">
                         <Rocket size={38} />

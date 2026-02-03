@@ -23,12 +23,9 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 h-[64px] ${
-      scrolled
-        ? (theme === 'dark' ? 'bg-[#0A0A0B]/80 glass-nav border-b border-white/5 shadow-xl' : 'bg-white/80 glass-nav border-b border-slate-200 shadow-xl')
-        : 'bg-transparent'
-    }`}>
-      <div className="max-w-7xl mx-auto px-8 h-full flex justify-between items-center">
+    <>
+      <header className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md">
+        <div className="h-[64px] max-w-7xl mx-auto px-6 flex items-center justify-between">
         <a href="/" className="flex items-center gap-3 group focus:outline-none" aria-label="Homepage">
           <img
             src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
@@ -70,13 +67,14 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-      </div>
+        </div>
+      </header>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu (flows below header; not absolutely positioned) */}
       {isOpen && (
-        <div className={`lg:hidden border-b absolute w-full left-0 animate-in fade-in slide-in-from-top-4 duration-300 ${
+        <div className={`lg:hidden border-b w-full animate-in fade-in slide-in-from-top-4 duration-300 ${
           theme === 'dark' ? 'bg-[#0A0A0B] border-white/5' : 'bg-white border-slate-200'
-        } px-8 py-10 shadow-2xl`}>
+        } px-6 py-10 shadow-2xl`} style={{ marginTop: '0' }}>
           <div className="flex flex-col gap-6">
             {navLinks.map((link) => (
               <a key={link.name} href={link.href} className="text-lg font-bold block w-full py-4 touchable" onClick={() => setIsOpen(false)}>
@@ -89,6 +87,6 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 };
