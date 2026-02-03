@@ -34,8 +34,8 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
             src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
             className="logo w-[140px] md:w-[160px] lg:w-[180px] h-auto"
             alt="Synckraft Logo"
-            width={180}
-            height={44}
+            width={1000}
+            height={500}
             loading="eager"
           />
         </a>
