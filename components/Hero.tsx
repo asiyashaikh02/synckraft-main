@@ -19,16 +19,12 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
   return (
     <section
       ref={heroRef}
-      className={`hero-animate relative w-full overflow-hidden pt-[calc(var(--header-height)+24px)] sm:pt-[calc(var(--header-height)+32px)] md:pt-[calc(var(--header-height)+40px)] lg:pt-[calc(var(--header-height)+56px)] pb-24 ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}
+      className={`hero-animate relative w-full overflow-hidden pt-[calc(var(--header-height)+56px)] sm:pt-[calc(var(--header-height)+64px)] md:pt-[calc(var(--header-height)+72px)] lg:pt-[calc(var(--header-height)+88px)] pb-[120px] ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}
     >
 
       <div className="max-w-7xl mx-auto px-8 w-full grid lg:grid-cols-2 gap-16 items-start relative z-10">
         <div className="reveal">
-          <div className={`mt-2 inline-flex rounded-full px-4 py-2 text-xs tracking-widest text-blue-400 bg-white/5 ${theme === 'dark' ? 'border-white/10' : ''}`}>
-            BUILDING WHAT MATTERS
-          </div>
-          
-          <h1 className={`mt-5 text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
+          <h1 className={`mt-5 font-extrabold leading-tight ${theme === 'dark' ? 'text-white' : 'text-slate-900'} text-[clamp(2.25rem,6vw,4.25rem)]`}> 
             Building <span className="text-blue-500">Scalable</span><br />
             Digital Ventures
           </h1>
@@ -37,16 +33,13 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
             Synckraft Technologies architects, launches, and scales high-potential technology platforms through precision framework execution.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-6">
-            <a href="#ecosystem" className="h-cta group px-10 py-5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg transition-all flex items-center justify-center gap-3 hover:shadow-[0_0_40px_rgba(37,99,235,0.4)] w-full sm:w-auto text-center touchable force-full-mobile">
-              Explore Our Ventures <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+          <div className="flex flex-col sm:flex-row gap-4 mt-6">
+            <a href="#ecosystem" className="px-8 py-4 rounded-[12px] bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg transition-all flex items-center justify-center gap-3 w-full sm:w-auto touchable">
+              Explore Our Ventures <ArrowRight size={20} className="ml-1" />
             </a>
-            <a
-              href="#contact"
-              className={`h-cta px-10 py-5 rounded-2xl border-2 font-bold text-lg transition-all text-center hover:-translate-y-1 w-full sm:w-auto ${
-                theme === 'dark' ? 'border-white/10 hover:bg-white/5 text-white' : 'border-slate-200 hover:bg-slate-50 text-slate-900'
-              } touchable force-full-mobile`}
-            >
+            <a href="#contact" className={`px-8 py-4 rounded-[12px] border-2 font-bold text-lg transition-all text-center w-full sm:w-auto ${
+                theme === 'dark' ? 'border-white/10 bg-transparent text-white hover:bg-white/5' : 'border-slate-200 bg-transparent text-slate-900 hover:bg-slate-50'
+              } touchable`}>
               Partner With Us
             </a>
           </div>

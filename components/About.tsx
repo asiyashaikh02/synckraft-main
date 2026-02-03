@@ -11,7 +11,7 @@ export const About: React.FC<ThemeProps> = ({ theme }) => {
       <div className="max-w-7xl mx-auto px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-24 items-center">
           <div className="reveal">
-            <h4 className="text-blue-500 font-bold uppercase tracking-[0.3em] text-[10px] mb-8">Our DNA</h4>
+            <h4 className="text-blue-500 font-bold uppercase tracking-widest text-xs mb-8">Our DNA</h4>
             <h2 className={`text-4xl md:text-6xl font-extrabold mb-10 leading-tight tracking-tight ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>
               Foundation with intent <br />
               <span className="text-slate-500 font-light italic">Small start. Solid core.</span>

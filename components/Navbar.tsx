@@ -24,18 +24,21 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md">
-        <div className="h-[64px] max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <a href="/" className="flex items-center gap-3 group focus:outline-none" aria-label="Homepage">
-          <img
-            src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
-            className="logo w-[160px] sm:w-[180px] lg:w-[210px] h-auto"
-            alt="Synckraft Logo"
-            width={210}
-            height={56}
-            loading="eager"
-          />
-        </a>
+      <header className="fixed top-0 left-0 right-0 z-50" style={{ backdropFilter: 'blur(10px)' }}>
+        <div className="h-[64px] max-w-7xl mx-auto px-6 flex items-center justify-between border-b border-white/5 bg-black/60 bg-opacity-60">
+          <div className="flex flex-col gap-1">{/* logo stack */}
+            <a href="/" className="flex items-center group focus:outline-none" aria-label="Homepage">
+              <img
+                src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
+                className="logo h-8 sm:h-9 w-auto"
+                alt="Synckraft Logo"
+                loading="eager"
+              />
+            </a>
+            <div className={`inline-flex items-center rounded-full px-3 py-1 text-[11px] tracking-widest uppercase font-bold ${theme === 'dark' ? 'bg-white/5 text-blue-400' : 'bg-slate-900/5 text-blue-600'}`}>
+              BUILDING WHAT MATTERS
+            </div>
+          </div>
 
         {/* Desktop Nav */}
         <div className="hidden lg:flex items-center gap-10">
