@@ -24,9 +24,9 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50" style={{ backdropFilter: 'blur(10px)' }}>
-        <div className="h-[64px] max-w-7xl mx-auto px-6 flex items-center justify-between border-b border-white/5 bg-black/60 bg-opacity-60">
-          <div className="flex flex-col gap-1">{/* logo stack */}
+      <header className="fixed top-0 left-0 right-0 z-[100] bg-black/80" style={{ backdropFilter: 'blur(12px)' }}>
+        <div className="h-[64px] max-w-7xl mx-auto px-6 flex items-center justify-between border-b border-white/5">
+          <div className="flex flex-col items-start gap-2">{/* logo stack */}
             <a href="/" className="flex items-center group focus:outline-none" aria-label="Homepage">
               <img
                 src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
@@ -73,11 +73,16 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
         </div>
       </header>
 
+      </header>
+
+      {/* Header spacer: ensures content starts below fixed header on all devices */}
+      <div className="h-[64px] w-full" aria-hidden="true" />
+
       {/* Mobile Menu (flows below header; not absolutely positioned) */}
       {isOpen && (
         <div className={`lg:hidden border-b w-full animate-in fade-in slide-in-from-top-4 duration-300 ${
           theme === 'dark' ? 'bg-[#0A0A0B] border-white/5' : 'bg-white border-slate-200'
-        } px-6 py-10 shadow-2xl`} style={{ marginTop: '0' }}>
+        } px-6 py-10 shadow-2xl`}>
           <div className="flex flex-col gap-6">
             {navLinks.map((link) => (
               <a key={link.name} href={link.href} className="text-lg font-bold block w-full py-4 touchable" onClick={() => setIsOpen(false)}>
