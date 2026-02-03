@@ -79,16 +79,16 @@ export const Ecosystem: React.FC<ThemeProps> = ({ theme }) => {
           </div>
         </div>
         
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 lg:grid-rows-2 gap-8 items-stretch">
           {ventures.map((venture, index) => (
             <div 
               key={index} 
-              className={`group p-8 sm:p-12 rounded-[3.5rem] border transition-transform transition-shadow transition-colors duration-200 ease-out h-full flex flex-col reveal card-glow touchable elev-1 hover:shadow-xl ${
-                index === currentIndex 
-                ? (theme === 'dark' ? 'bg-[#111112] border-blue-600/50 shadow-2xl' : 'bg-white border-blue-600 shadow-2xl') 
-                : (theme === 'dark' ? 'bg-[#0C0C0D] border-white/5' : 'bg-white border-transparent shadow-sm')
-              }`}
-            >
+              className={`group p-8 sm:p-12 rounded-[3.5rem] border transition-transform transition-shadow transition-colors duration-200 ease-out flex flex-col reveal card-glow will-change-transform ${
+                // Solaroft: primary, spans left column and two rows on large screens
+                venture.title === 'Solaroft'
+                ? 'lg:col-span-2 lg:row-span-2 min-h-[460px] lg:min-h-[460px] border-l-4 border-blue-500/20 shadow-2xl'
+                : 'min-h-[220px] lg:min-h-[220px] h-full'
+              }`}>
               <div className="flex justify-between items-start mb-12">
                 <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transition-transform duration-200 ease-out transform-gpu group-hover:-translate-y-1 group-hover:shadow-xl will-change-transform ${
                     venture.isLive ? 'bg-blue-600 text-white' : (theme === 'dark' ? 'bg-white/5 text-slate-600' : 'bg-slate-50 text-slate-300')
@@ -106,7 +106,7 @@ export const Ecosystem: React.FC<ThemeProps> = ({ theme }) => {
               
               <div className="mb-4">
                  <span className="text-[10px] font-bold text-blue-500/60 uppercase tracking-widest">{venture.tag}</span>
-                 <h3 className={`text-3xl font-bold mt-1 mb-3 group-hover:text-blue-500 transition-colors ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{venture.title}</h3>
+                 <h3 className={`text-3xl font-bold mt-1 mb-3 ${venture.title === 'Solaroft' ? 'text-4xl' : ''} transition-colors ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{venture.title}</h3>
                  {venture.title === 'Solaroft' && (
                    <div className={`text-sm font-semibold mb-4 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
                      Solar AMC • Cleaning • Maintenance • Efficiency Optimization
