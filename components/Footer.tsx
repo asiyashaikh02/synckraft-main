@@ -81,19 +81,19 @@ export const Footer: React.FC<ThemeProps> = ({ theme }) => {
         <div className="flex flex-wrap items-center justify-between gap-10 py-12 border-y border-white/5 mb-20">
           <div className="flex items-center gap-10">
             {socialLinks.map((social, i) => (
-              <a 
-                key={i} 
-                href={social.href} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-blue-200 hover:text-white transition-all transform hover:scale-110 hover:-translate-y-0.5 touchable inline-flex items-center justify-center p-2 rounded-lg"
+              <a
+                key={i}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={social.label}
+                className="text-blue-200 hover:text-white transition-colors transition-transform duration-200 ease-out transform hover:-translate-y-0.5 inline-flex items-center justify-center p-3 rounded-lg"
               >
-                <social.icon size={26} strokeWidth={1.5} />
+                <social.icon size={30} strokeWidth={1.5} />
               </a>
             ))}
-            <a href="#" className="text-blue-200 hover:text-white transition-all transform hover:scale-125 hover:-translate-y-1">
-              <MapPin size={26} strokeWidth={1.5} />
+            <a href="#" className="text-blue-200 hover:text-white transition-colors transition-transform duration-200 ease-out transform hover:-translate-y-1 p-3 rounded-lg">
+              <MapPin size={30} strokeWidth={1.5} />
             </a>
           </div>
           <div className="text-blue-400/20 text-[10px] font-black uppercase tracking-[0.6em] hidden lg:block">
