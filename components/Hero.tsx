@@ -125,7 +125,7 @@ export const Hero: React.FC<{ theme: 'dark' | 'light' }> = ({ theme }) => {
         
         <div className="reveal flex flex-col items-start">
           {/* THE BADGE WITH PULSING DOT */}
-          <div className={`inline-flex items-center gap-3 px-4 py-2 rounded-full mb-8 border transition-all ${
+          {/* <div className={`inline-flex items-center gap-3 px-4 py-2 rounded-full mb-8 border transition-all ${
             theme === 'dark' ? 'bg-white/5 border-white/10' : 'bg-blue-50 border-blue-100'
           }`}>
             <span className="relative flex h-2 w-2">
@@ -137,7 +137,7 @@ export const Hero: React.FC<{ theme: 'dark' | 'light' }> = ({ theme }) => {
             }`}>
               Building What Matters
             </span>
-          </div>
+          </div> */}
 
           <h1 className={`font-black leading-[1.1] ${theme === 'dark' ? 'text-white' : 'text-slate-900'} text-[clamp(2.5rem,8vw,4.5rem)]`}> 
             Building <span className="text-blue-500">Scalable</span><br />
