@@ -31,8 +31,8 @@ export const Footer: React.FC<ThemeProps> = ({ theme }) => {
                   src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
                   className="logo w-[140px] md:w-[160px] lg:w-[160px] h-auto"
                   alt="Synckraft Logo"
-                  width={1000}
-                  height={500}
+                  width={160}
+                  height={40}
                   loading="eager"
                 />
               </a>
