@@ -645,17 +645,19 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
       >
         <div className="max-w-7xl mx-auto px-5 flex items-center justify-between">
           
-          {/* LOGO SECTION - Hardcoded Height for both modes */}
-          <div className="flex items-center">
+          {/* LOGO SECTION - Hard-Locked Dimensions */}
+          <div className="flex items-center" style={{ height: '65px' }}> {/* Container height fix */}
             <a href="/" className="block focus:outline-none">
               <img
                 key={theme} 
                 src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
-                /* Yahan height ko lock kar diya hai - Ab size change nahi hoga */
-                className="h-[55px] md:h-[70px] w-auto object-contain block antialiased" 
+                /* Yahan humne height ko lock kar diya hai taaki light mode dark jaisa hi dikhe */
+                className="w-auto block antialiased object-contain" 
                 style={{ 
-                  height: scrolled ? '55px' : '70px', // Scroll par consistency ke liye
-                  minHeight: '55px' 
+                  height: '65px',       // Desktop height lock
+                  maxHeight: '65px',    // Overriding any other style
+                  minHeight: '65px',    // Smallest it can go
+                  width: 'auto'
                 }}
                 alt="Synckraft Logo"
                 loading="eager"
@@ -667,13 +669,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           <div className="flex items-center gap-2 md:gap-5">
             <nav className="hidden lg:flex items-center gap-8 mr-4">
               {navLinks.map((link) => (
-                <a 
-                  key={link.name} 
-                  href={link.href} 
-                  className={`text-sm font-bold transition-colors ${
-                    theme === 'dark' ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-blue-600'
-                  }`}
-                >
+                <a key={link.name} href={link.href} className={`text-sm font-bold ${theme === 'dark' ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-blue-600'}`}>
                   {link.name}
                 </a>
               ))}
@@ -688,7 +684,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
               {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
             </button>
             
-            <a href="#contact" className="hidden sm:block px-6 py-3 rounded-full bg-blue-600 text-white text-sm font-bold shadow-lg shadow-blue-600/20 active:scale-95 transition-transform">
+            <a href="#contact" className="hidden sm:block px-6 py-3 rounded-full bg-blue-600 text-white text-sm font-bold shadow-lg shadow-blue-600/20 active:scale-95 transition-all">
               Partner With Us
             </a>
 
@@ -702,8 +698,8 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
         </div>
       </header>
 
-      {/* FIXED SPACER */}
-      <div className="h-[90px] md:h-[110px] w-full" aria-hidden="true" />
+      {/* HEADER SPACER */}
+      <div className="h-[100px] md:h-[120px] w-full" aria-hidden="true" />
 
       {/* MOBILE MENU */}
       {isOpen && (
