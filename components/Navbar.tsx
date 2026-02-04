@@ -290,6 +290,104 @@
 // };
 
 
+// import React, { useState, useEffect } from 'react';
+// import { Menu, X, Sun, Moon } from 'lucide-react';
+
+// interface NavbarProps {
+//   theme: 'dark' | 'light';
+//   toggleTheme: () => void;
+// }
+
+// export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
+//   const [scrolled, setScrolled] = useState(false);
+//   const [isOpen, setIsOpen] = useState(false);
+
+//   useEffect(() => {
+//     const handleScroll = () => setScrolled(window.scrollY > 20);
+//     window.addEventListener('scroll', handleScroll);
+//     return () => window.removeEventListener('scroll', handleScroll);
+//   }, []);
+
+//   const navLinks = [
+//     { name: 'Venture Ecosystem', href: '#ecosystem' },
+//     { name: 'Incubation Strategy', href: '#pillars' },
+//   ];
+
+//   return (
+//     <>
+//       <header 
+//         className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
+//           scrolled 
+//             ? (theme === 'dark' ? 'bg-black/90 border-b border-white/10 py-2' : 'bg-white/90 border-b border-slate-200 py-2') 
+//             : 'bg-transparent py-4'
+//         }`} 
+//         style={{ backdropFilter: 'blur(12px)' }}
+//       >
+//         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          
+//           {/* LARGE LOGO SIZING WITH THEME-SYNC FIX */}
+//           <a href="/" className="flex items-center group transition-transform duration-300 hover:scale-105">
+//             <img
+//               key={theme} 
+//               src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
+//               className="h-16 sm:h-20 md:h-24 w-auto object-contain block antialiased" 
+//               alt="Synckraft Logo"
+//               loading="eager"
+//             />
+//           </a>
+
+//           <div className="flex items-center gap-5">
+//             {/* Desktop Navigation Links */}
+//             <nav className="hidden lg:flex items-center gap-8 mr-4">
+//               {navLinks.map((link) => (
+//                 <a 
+//                   key={link.name} 
+//                   href={link.href} 
+//                   className={`text-sm font-bold transition-colors ${theme === 'dark' ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-blue-600'}`}
+//                 >
+//                   {link.name}
+//                 </a>
+//               ))}
+//             </nav>
+
+//             <button 
+//               onClick={toggleTheme}
+//               className={`p-2.5 rounded-xl transition-colors ${theme === 'dark' ? 'hover:bg-white/5 text-slate-400' : 'hover:bg-slate-100 text-slate-600'}`}
+//               aria-label="Toggle Theme"
+//             >
+//               {theme === 'dark' ? <Sun size={22} /> : <Moon size={22} />}
+//             </button>
+            
+//             <a href="#contact" className="hidden sm:block px-7 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-all shadow-lg shadow-blue-600/20 active:scale-95">
+//               Partner With Us
+//             </a>
+
+//             <button 
+//               className={`lg:hidden p-2 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`} 
+//               onClick={() => setIsOpen(!isOpen)}
+//             >
+//               {isOpen ? <X size={32} /> : <Menu size={32} />}
+//             </button>
+//           </div>
+//         </div>
+//       </header>
+
+//       {/* Mobile Menu Overlay */}
+//       {isOpen && (
+//         <div className={`fixed inset-0 z-[90] lg:hidden flex flex-col justify-center items-center gap-10 animate-in fade-in duration-300 ${
+//           theme === 'dark' ? 'bg-[#0A0A0B] text-white' : 'bg-white text-slate-900'
+//         }`}>
+//            <a href="#ecosystem" className="text-3xl font-bold hover:text-blue-500 transition-colors" onClick={() => setIsOpen(false)}>Venture Ecosystem</a>
+//            <a href="#pillars" className="text-3xl font-bold hover:text-blue-500 transition-colors" onClick={() => setIsOpen(false)}>Incubation Strategy</a>
+//            <a href="#contact" className="px-10 py-5 rounded-full bg-blue-600 text-white text-xl font-bold shadow-2xl shadow-blue-600/40" onClick={() => setIsOpen(false)}>Partner With Us</a>
+//         </div>
+//       )}
+//     </>
+//   );
+// };
+
+
+
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 
@@ -325,11 +423,12 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           
-          {/* LARGE LOGO SIZING WITH THEME-SYNC FIX */}
+          {/* LOGO SECTION: Dark aur Light dono ke liye exact same large size */}
           <a href="/" className="flex items-center group transition-transform duration-300 hover:scale-105">
             <img
               key={theme} 
               src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
+              /* 'h-16 sm:h-20 md:h-24' ensures large size across all screen modes */
               className="h-16 sm:h-20 md:h-24 w-auto object-contain block antialiased" 
               alt="Synckraft Logo"
               loading="eager"
@@ -337,31 +436,38 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           </a>
 
           <div className="flex items-center gap-5">
-            {/* Desktop Navigation Links */}
+            {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-8 mr-4">
               {navLinks.map((link) => (
                 <a 
                   key={link.name} 
                   href={link.href} 
-                  className={`text-sm font-bold transition-colors ${theme === 'dark' ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-blue-600'}`}
+                  className={`text-sm font-bold transition-colors ${
+                    theme === 'dark' ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-blue-600'
+                  }`}
                 >
                   {link.name}
                 </a>
               ))}
             </nav>
 
+            {/* Theme Toggle Button */}
             <button 
               onClick={toggleTheme}
-              className={`p-2.5 rounded-xl transition-colors ${theme === 'dark' ? 'hover:bg-white/5 text-slate-400' : 'hover:bg-slate-100 text-slate-600'}`}
+              className={`p-2.5 rounded-xl transition-colors ${
+                theme === 'dark' ? 'hover:bg-white/5 text-slate-400' : 'hover:bg-slate-100 text-slate-600'
+              }`}
               aria-label="Toggle Theme"
             >
               {theme === 'dark' ? <Sun size={22} /> : <Moon size={22} />}
             </button>
             
+            {/* CTA Button */}
             <a href="#contact" className="hidden sm:block px-7 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold transition-all shadow-lg shadow-blue-600/20 active:scale-95">
               Partner With Us
             </a>
 
+            {/* Mobile Menu Toggle */}
             <button 
               className={`lg:hidden p-2 ${theme === 'dark' ? 'text-white' : 'text-slate-900'}`} 
               onClick={() => setIsOpen(!isOpen)}
@@ -385,3 +491,5 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
     </>
   );
 };
+
+
