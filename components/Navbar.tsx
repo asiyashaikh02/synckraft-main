@@ -239,14 +239,22 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* MUCH LARGER LOGO SIZING */}
-          <a href="/" className="flex items-center group transition-transform duration-300 hover:scale-105">
+          {/* <a href="/" className="flex items-center group transition-transform duration-300 hover:scale-105">
             <img
               src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
               className="h-12 sm:h-14 md:h-16 w-auto object-contain" 
               alt="Synckraft Logo"
             />
-          </a>
-
+          </a> */}
+        <a href="/" className="flex items-center group transition-transform duration-300 hover:scale-105">
+  <img
+    src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
+    /* Increased height: h-16 (mobile), h-20 (tablet), h-24 (desktop) */
+    className="h-16 sm:h-20 md:h-24 w-auto object-contain block" 
+    alt="Synckraft Logo"
+    key={theme} /* This forces the browser to re-render the image when theme changes */
+  />
+</a>
           <div className="flex items-center gap-5">
             <button 
               onClick={toggleTheme}
