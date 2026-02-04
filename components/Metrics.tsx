@@ -54,9 +54,9 @@ export const Metrics: React.FC<ThemeProps> = ({ theme }) => {
     <section id="metrics" className={`py-44 relative ${theme === 'dark' ? 'bg-[#0A0A0B]' : 'bg-white'}`}>
       <div className="max-w-7xl mx-auto px-8 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
-          <Counter end={100} suffix="+" title="Institutional Projects" theme={theme} />
-          <Counter end={15} suffix="+" title="Venture Alliances" theme={theme} />
-          <Counter end={6} title="Active Holdings" theme={theme} />
+          <Counter end={25} suffix="+" title="Institutional Projects" theme={theme} />
+          <Counter end={5} suffix="+" title="Venture Alliances" theme={theme} />
+          <Counter end={2} suffix="+" title="Active Holdings" theme={theme} />
           <Counter end={100} suffix="%" title="Execution Uptime" theme={theme} />
         </div>
       </div>

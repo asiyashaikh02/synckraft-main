@@ -31,8 +31,8 @@ export const Footer: React.FC<ThemeProps> = ({ theme }) => {
                   src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
                   className="logo w-[140px] md:w-[160px] lg:w-[160px] h-auto"
                   alt="Synckraft Logo"
-                  width={160}
-                  height={40}
+                  width={200}
+                  height={50}
                   loading="eager"
                 />
               </a>
@@ -40,7 +40,7 @@ export const Footer: React.FC<ThemeProps> = ({ theme }) => {
                 <span className="text-4xl font-bold tracking-tight font-display block leading-none">Synckraft</span>
                 <span className={`text-[10px] font-black uppercase tracking-[0.4em] mt-2 block opacity-60 ${
                   theme === 'dark' ? 'text-white/70' : 'text-black/60'
-                }`}>Venture Studio Institutional</span>
+                }`}>Creating Impact </span>
               </div>
             </div>
             
