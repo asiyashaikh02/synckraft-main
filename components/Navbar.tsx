@@ -610,9 +610,6 @@
 //     </>
 //   );
 // };
-
-
-
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 
@@ -626,6 +623,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    // Thoda jaldi trigger hoga scroll effect
     const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -648,35 +646,31 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
       >
         <div className="max-w-7xl mx-auto px-5 flex items-center justify-between">
           
-          {/* LOGO & BADGE: Fixed alignment for Mobile */}
-          <div className="flex flex-col items-start gap-1.5">
+          {/* LOGO SECTION - Badge removed, Size locked to match Dark Mode */}
+          <div className="flex items-center">
             <a href="/" className="block focus:outline-none active:opacity-80 transition-opacity">
               <img
                 key={theme} 
                 src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
-                /* Mobile par h-14 (56px) aur Desktop par h-20 (80px) - Hardlocked */
-                className="h-14 md:h-20 w-auto object-contain block antialiased" 
-                style={{ minHeight: '56px' }} // Mobile safety lock
+                /* Dark mode jaisa large size lock kiya hai pixel values ke saath */
+                className="h-[50px] md:h-[65px] w-auto object-contain block antialiased" 
                 alt="Synckraft Logo"
                 loading="eager"
               />
             </a>
-            
-            {/* BUILDING WHAT MATTERS: Ensuring it never gets hidden */}
-            <div className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[9px] md:text-[10px] tracking-[0.15em] uppercase font-extrabold border shadow-sm ${
-              theme === 'dark' 
-                ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' 
-                : 'bg-blue-50 text-blue-600 border-blue-200'
-            }`}>
-              Building What Matters
-            </div>
           </div>
 
           {/* RIGHT SIDE ACTIONS */}
           <div className="flex items-center gap-2 md:gap-5">
             <nav className="hidden lg:flex items-center gap-8 mr-4">
               {navLinks.map((link) => (
-                <a key={link.name} href={link.href} className={`text-sm font-bold ${theme === 'dark' ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-blue-600'}`}>
+                <a 
+                  key={link.name} 
+                  href={link.href} 
+                  className={`text-sm font-bold transition-colors ${
+                    theme === 'dark' ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-blue-600'
+                  }`}
+                >
                   {link.name}
                 </a>
               ))}
@@ -691,7 +685,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
               {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
             </button>
             
-            <a href="#contact" className="hidden sm:block px-6 py-3 rounded-full bg-blue-600 text-white text-sm font-bold shadow-lg shadow-blue-600/20">
+            <a href="#contact" className="hidden sm:block px-6 py-3 rounded-full bg-blue-600 text-white text-sm font-bold shadow-lg shadow-blue-600/20 active:scale-95 transition-transform">
               Partner With Us
             </a>
 
@@ -705,8 +699,8 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
         </div>
       </header>
 
-      {/* DYNAMIC MOBILE SPACER */}
-      <div className="h-[120px] md:h-[150px] w-full" aria-hidden="true" />
+      {/* HEADER SPACER - Matches the new height without badge */}
+      <div className="h-[80px] md:h-[100px] w-full" aria-hidden="true" />
 
       {/* MOBILE MENU */}
       {isOpen && (
@@ -715,7 +709,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
         }`}>
            <a href="#ecosystem" className="text-3xl font-black border-b border-white/10 pb-4" onClick={() => setIsOpen(false)}>Venture Ecosystem</a>
            <a href="#pillars" className="text-3xl font-black border-b border-white/10 pb-4" onClick={() => setIsOpen(false)}>Incubation Strategy</a>
-           <a href="#contact" className="w-full py-5 rounded-2xl bg-blue-600 text-white text-center text-xl font-black shadow-2xl" onClick={() => setIsOpen(false)}>Partner With Us</a>
+           <a href="#contact" className="w-full py-5 rounded-2xl bg-blue-600 text-white text-center text-xl font-black" onClick={() => setIsOpen(false)}>Partner With Us</a>
         </div>
       )}
     </>
