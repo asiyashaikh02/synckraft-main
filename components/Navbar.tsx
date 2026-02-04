@@ -623,7 +623,6 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Thoda jaldi trigger hoga scroll effect
     const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -646,14 +645,18 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
       >
         <div className="max-w-7xl mx-auto px-5 flex items-center justify-between">
           
-          {/* LOGO SECTION - Badge removed, Size locked to match Dark Mode */}
+          {/* LOGO SECTION - Hardcoded Height for both modes */}
           <div className="flex items-center">
-            <a href="/" className="block focus:outline-none active:opacity-80 transition-opacity">
+            <a href="/" className="block focus:outline-none">
               <img
                 key={theme} 
                 src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
-                /* Dark mode jaisa large size lock kiya hai pixel values ke saath */
-                className="h-[50px] md:h-[65px] w-auto object-contain block antialiased" 
+                /* Yahan height ko lock kar diya hai - Ab size change nahi hoga */
+                className="h-[55px] md:h-[70px] w-auto object-contain block antialiased" 
+                style={{ 
+                  height: scrolled ? '55px' : '70px', // Scroll par consistency ke liye
+                  minHeight: '55px' 
+                }}
                 alt="Synckraft Logo"
                 loading="eager"
               />
@@ -699,8 +702,8 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
         </div>
       </header>
 
-      {/* HEADER SPACER - Matches the new height without badge */}
-      <div className="h-[80px] md:h-[100px] w-full" aria-hidden="true" />
+      {/* FIXED SPACER */}
+      <div className="h-[90px] md:h-[110px] w-full" aria-hidden="true" />
 
       {/* MOBILE MENU */}
       {isOpen && (
