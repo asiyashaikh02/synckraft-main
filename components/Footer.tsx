@@ -31,18 +31,18 @@ export const Footer: React.FC<ThemeProps> = ({ theme }) => {
                   src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
                   className="logo w-[140px] md:w-[160px] lg:w-[160px] h-auto"
                   alt="Synckraft Logo"
-                  width={200}
-                  height={50}
+                  width={400}
+                  height={80}
                   loading="eager"
                 />
               </a>
-              <div>
+              {/* <div>
                 <span className="text-4xl font-bold tracking-tight font-display block leading-none">Synckraft</span>
                 <span className={`text-[10px] font-black uppercase tracking-[0.4em] mt-2 block opacity-60 ${
                   theme === 'dark' ? 'text-white/70' : 'text-black/60'
                 }`}>Creating Impact </span>
-              </div>
-            </div>
+              </div> */}
+            </div> 
             
             <p className="text-blue-50 text-xl leading-relaxed max-w-lg mb-14 font-light opacity-70">
               Architecting the future through institutional execution. We build, launch, and scale the technology platforms that define tomorrow's digital infrastructure.
