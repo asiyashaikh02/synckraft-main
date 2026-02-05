@@ -49,7 +49,7 @@ export const Hero: React.FC<HeroProps> = ({ theme }) => {
             theme === 'dark' ? 'text-white' : 'text-slate-900'
           } text-[clamp(2.5rem,8vw,4.5rem)]`}> 
             Building <span className="text-blue-500">Scalable</span><br />
-            Digital Ventures
+            Digital <span className="text-blue-500">Capabilities</span>
           </h1>
           
           <p className="mt-5 text-base md:text-lg text-slate-400 max-w-xl leading-relaxed">
