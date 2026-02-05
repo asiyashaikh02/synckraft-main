@@ -27,14 +27,30 @@ export const Footer: React.FC<ThemeProps> = ({ theme }) => {
           <div className="lg:col-span-6">
             <div className="flex items-center gap-5 mb-12 group cursor-pointer">
               <a href="/" className="inline-flex items-center gap-3 focus:outline-none" aria-label="Homepage">
-                <img
+                {/* <img
                   src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
                   className="logo w-[140px] md:w-[160px] lg:w-[160px] h-auto"
                   alt="Synckraft Logo"
                   width={400}
                   height={80}
                   loading="eager"
-                />
+                /> */}
+              <img
+                src={theme === 'dark' ? '/logos/synckraft-dark.png' : '/logos/synckraft-light.png'}
+                alt="Synckraft Logo"
+                className="
+                  h-auto 
+                  w-[180px] 
+                  sm:w-[200px] 
+                  md:w-[220px] 
+                  lg:w-[240px]
+                  transition-all
+                "
+                width={600}
+                height={120}
+                loading="lazy"
+              />
+
               </a>
               {/* <div>
                 <span className="text-4xl font-bold tracking-tight font-display block leading-none">Synckraft</span>
