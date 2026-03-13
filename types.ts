@@ -4,8 +4,9 @@
 
 export enum UserRole {
   MASTER_ADMIN = "MASTER_ADMIN",
-  SALES = "SALES",
-  OPERATIONS = "OPERATIONS",
+  SALES_ADMIN = "SALES_ADMIN",
+  SALES_USER = "SALES_USER",
+  OPS_USER = "OPS_USER",
 }
 
 export enum UserStatus {
@@ -29,9 +30,13 @@ export interface UserProfile {
 
 export enum LeadStatus {
   NEW = "NEW",                 // freshly created
+  CONTACTED = "CONTACTED",     // contacted
   NEGOTIATION = "NEGOTIATION", // discussion / pricing
+  CONTRACTED = "CONTRACTED",   // agreed terms
   APPROVED = "APPROVED",       // approved → convert to customer
+  CONVERTED = "CONVERTED",     // successfully converted to customer
   REJECTED = "REJECTED",
+  LOST = "LOST"                // discontinued
 }
 
 export interface Lead {
@@ -44,9 +49,104 @@ export interface Lead {
   salesUserId: string;
   salesUniqueId?: string; // links to profiles.uniqueId for integrity
   clientCode?: string; // client-specific code shown on leads
+  city?: string; // e.g. "Mumbai", "Delhi"
+  aiScore?: number; // 0-100 score
   potentialValue: number;
   createdAt: number;
   updatedAt: number;
+}
+
+/* =========================
+   NOTES & FOLLOW UPS
+========================= */
+
+export interface Note {
+  id: string;
+  leadId: string;
+  userId: string;
+  note: string;
+  createdAt: number;
+}
+
+export enum FollowUpStatus {
+  SCHEDULED = "SCHEDULED",
+  COMPLETED = "COMPLETED",
+  MISSED = "MISSED",
+}
+
+export interface FollowUp {
+  id: string;
+  leadId: string;
+  leadName?: string;
+  userId: string;
+  followUpDate: number;
+  reminderNote: string;
+  status: FollowUpStatus;
+  createdAt: number;
+}
+
+/* =========================
+   TASKS
+========================= */
+
+export enum TaskStatus {
+  PENDING = "PENDING",
+  IN_PROGRESS = "IN_PROGRESS",
+  COMPLETED = "COMPLETED",
+}
+
+export enum TaskPriority {
+  LOW = "LOW",
+  MEDIUM = "MEDIUM",
+  HIGH = "HIGH",
+}
+
+export interface Task {
+  id: string;
+  userId: string;
+  title: string;
+  relatedLeadId?: string;
+  dueDate: number;
+  priority: TaskPriority;
+  status: TaskStatus;
+  createdAt: number;
+}
+
+/* =========================
+   SOLAR PROPOSAL
+========================= */
+
+export interface SolarProposal {
+  id: string;
+  leadId: string;
+  panelCount: number;
+  panelSizeKw: number;
+  proposalAmount: number;
+  finalAmount: number;
+  roofArea: number;
+}
+
+/* =========================
+   ACTIVITY LOGS
+========================= */
+
+export enum ActivityType {
+  CALL = "CALL",
+  SITE_VISIT = "SITE_VISIT",
+  FOLLOW_UP = "FOLLOW_UP",
+  STATUS_CHANGE = "STATUS_CHANGE",
+  NOTE_ADDED = "NOTE_ADDED",
+  PROPOSAL_GENERATED = "PROPOSAL_GENERATED"
+}
+
+export interface ActivityLog {
+  id: string;
+  userId: string;       // ID of the user who performed the activity
+  leadId?: string;      // Related lead (optional)
+  customerId?: string;  // Related customer (optional)
+  type: ActivityType;
+  description: string;
+  createdAt: number;
 }
 
 /* =========================

@@ -8,7 +8,7 @@ import { auth, db } from "./firebase";
 import { UserRole, UserStatus } from "../types";
 
 // 🔐 Only this email becomes MASTER_ADMIN automatically
-const MASTER_ADMIN_EMAIL = "synckraft.me@gmail.com";
+const MASTER_ADMIN_EMAIL = "admin@gmail.com";
 
 /**
  * Register new user
@@ -31,7 +31,7 @@ const MASTER_ADMIN_EMAIL = "synckraft.me@gmail.com";
     createdAt: Date.now(),
   };
 
-  await setDoc(doc(db, "users", cred.user.uid), profile);
+  await setDoc(doc(db, "sales_users", cred.user.uid), profile);
   return profile;
 };
 
@@ -54,7 +54,7 @@ const MASTER_ADMIN_EMAIL = "synckraft.me@gmail.com";
 //     createdAt: Date.now(),
 //   };
 
-//   await setDoc(doc(db, "users", cred.user.uid), profile);
+//   await setDoc(doc(db, "sales_users", cred.user.uid), profile);
 //   return profile;
 // };
 
@@ -67,7 +67,7 @@ export const loginUser = async (email: string, pass: string) => {
   const cred = await signInWithEmailAndPassword(auth, email, pass);
   const uid = cred.user.uid;
 
-  const ref = doc(db, "users", uid);
+  const ref = doc(db, "sales_users", uid);
   const snap = await getDoc(ref);
 
   // 🔥 AUTO-HEAL: profile missing
@@ -77,7 +77,7 @@ export const loginUser = async (email: string, pass: string) => {
       uid,
       email,
       displayName: cred.user.displayName || "",
-      role: isMasterAdmin ? UserRole.MASTER_ADMIN : UserRole.SALES,
+      role: isMasterAdmin ? UserRole.MASTER_ADMIN : UserRole.SALES_USER,
       status: isMasterAdmin ? UserStatus.ACTIVE : UserStatus.PENDING,
       createdAt: Date.now(),
     };
