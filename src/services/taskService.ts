@@ -50,7 +50,7 @@ export const updateFollowUpStatus = async (followUpId: string, status: FollowUpS
   await updateDoc(doc(db, FOLLOW_UPS_COLLECTION, followUpId), { status });
 };
 
-export const subscribeToUserTasks = (userId: string, callback: (tasks: Task[]) => void) => {
+export const subscribeToUserTasks = (userId: string, callback: (tasks: Task[]) => void, onError?: (err: any) => void) => {
   const q = query(
     collection(db, TASKS_COLLECTION),
     where('userId', '==', userId),
@@ -61,10 +61,13 @@ export const subscribeToUserTasks = (userId: string, callback: (tasks: Task[]) =
     const tasks: Task[] = [];
     snapshot.forEach((doc) => tasks.push({ id: doc.id, ...doc.data() } as Task));
     callback(tasks);
+  }, (err) => {
+    console.error('Task subscription error:', err);
+    if (onError) onError(err);
   });
 };
 
-export const subscribeToUserFollowUps = (userId: string, callback: (followUps: FollowUp[]) => void) => {
+export const subscribeToUserFollowUps = (userId: string, callback: (followUps: FollowUp[]) => void, onError?: (err: any) => void) => {
   const q = query(
     collection(db, FOLLOW_UPS_COLLECTION),
     where('userId', '==', userId),
@@ -75,5 +78,8 @@ export const subscribeToUserFollowUps = (userId: string, callback: (followUps: F
     const followUps: FollowUp[] = [];
     snapshot.forEach((doc) => followUps.push({ id: doc.id, ...doc.data() } as FollowUp));
     callback(followUps);
+  }, (err) => {
+    console.error('Follow-up subscription error:', err);
+    if (onError) onError(err);
   });
 };

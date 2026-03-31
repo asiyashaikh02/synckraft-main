@@ -38,7 +38,8 @@ export const logActivity = async (
 export const subscribeToActivities = (
   callback: (activities: ActivityLog[]) => void,
   userId?: string,   // If provided, filters by specific user
-  maxLogs: number = 50
+  maxLogs: number = 50,
+  onError?: (err: any) => void
 ) => {
   let q;
   if (userId) {
@@ -63,14 +64,16 @@ export const subscribeToActivities = (
     });
     callback(activitiesData);
   }, (error) => {
-    console.error("Error subscribing to activities: ", error);
+    console.error("Activities subscription error: ", error);
+    if (onError) onError(error);
   });
 };
 
 export const subscribeToLeadActivities = (
   leadId: string,
   callback: (activities: ActivityLog[]) => void,
-  maxLogs: number = 50
+  maxLogs: number = 50,
+  onError?: (err: any) => void
 ) => {
   const q = query(
       collection(db, ACTIVITIES_COLLECTION),
@@ -86,6 +89,7 @@ export const subscribeToLeadActivities = (
     });
     callback(activitiesData);
   }, (error) => {
-    console.error("Error subscribing to lead activities: ", error);
+    console.error("Lead activities subscription error: ", error);
+    if (onError) onError(error);
   });
 };

@@ -27,11 +27,11 @@ export const addNote = async (leadId: string, userId: string, text: string) => {
   }
 };
 
-export const subscribeToLeadNotes = (leadId: string, callback: (notes: Note[]) => void) => {
+export const subscribeToLeadNotes = (leadId: string, callback: (notes: Note[]) => void, onError?: (err: any) => void) => {
   const q = query(
     collection(db, NOTES_COLLECTION),
     where('leadId', '==', leadId),
-    orderBy('createdAt', 'desc') // Ensure indexing in firestore later if composite
+    orderBy('createdAt', 'desc')
   );
 
   return onSnapshot(q, (snapshot) => {
@@ -39,10 +39,10 @@ export const subscribeToLeadNotes = (leadId: string, callback: (notes: Note[]) =
     snapshot.forEach((doc) => {
       notes.push({ id: doc.id, ...doc.data() } as Note);
     });
-    // Due to missing composite index often in dev early on, we also sort client side
     notes.sort((a,b) => b.createdAt - a.createdAt);
     callback(notes);
   }, (error) => {
-    console.error("Error subscribing to notes: ", error);
+    console.error("Note subscription error:", error);
+    if (onError) onError(error);
   });
 };

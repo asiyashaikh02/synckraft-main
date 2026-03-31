@@ -25,18 +25,30 @@ import {
 } from 'recharts';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import { LeadStatus } from '../types';
+import { LeadStatus, UserRole } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { runDataMigration } from '../services/migrationService';
+import { useAuth } from '../hooks/useAuth';
+import { LoadingSpinner } from '../components/common/LoadingSpinner';
+import { ErrorAlert } from '../components/common/ErrorAlert';
+import { Unauthorized } from '../components/common/Unauthorized';
 
 export const MasterDashboard = () => {
+  const { user } = useAuth();
   const [leads, setLeads] = useState<any[]>([]);
   const [customers, setCustomers] = useState<any[]>([]);
   const [projects, setProjects] = useState<any[]>([]);
   const [installations, setInstallations] = useState<any[]>([]);
   const [completed, setCompleted] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [migrating, setMigrating] = useState(false);
   const navigate = useNavigate();
+
+  // RBAC Guard
+  if (user?.role !== UserRole.MASTER_ADMIN) {
+    return <Unauthorized />;
+  }
 
   const handleMigration = async () => {
     if (!window.confirm("Run data migration to standardize collections?")) return;
@@ -51,27 +63,32 @@ export const MasterDashboard = () => {
   };
 
   useEffect(() => {
-    const unsubLeads = onSnapshot(collection(db, "leads"), s =>
-      setLeads(s.docs.map(d => ({ id: d.id, ...d.data() })))
-    );
+    const handleError = (err: any) => {
+      console.error("MasterDashboard sync error:", err);
+      setError(true);
+      setLoading(false);
+    };
 
-    const unsubCustomers = onSnapshot(collection(db, "customers"), s =>
-      setCustomers(s.docs.map(d => ({ id: d.id, ...d.data() })))
-    );
+    const unsubLeads = onSnapshot(collection(db, "leads"), s => {
+      setLeads(s.docs.map(d => ({ id: d.id, ...d.data() })));
+      setLoading(false);
+    }, handleError);
 
-    // Only fetch ACTIVE or PLANNING projects
-    const unsubProjects = onSnapshot(query(collection(db, "projects"), where("status", "in", ["ACTIVE", "PLANNING"])), s =>
-      setProjects(s.docs.map(d => ({ id: d.id, ...d.data() })))
-    );
+    const unsubCustomers = onSnapshot(collection(db, "customers"), s => {
+      setCustomers(s.docs.map(d => ({ id: d.id, ...d.data() })));
+    }, handleError);
 
-    // Only fetch PENDING installations
-    const unsubInstalls = onSnapshot(query(collection(db, "installations"), where("status", "==", "PENDING")), s =>
-      setInstallations(s.docs.map(d => ({ id: d.id, ...d.data() })))
-    );
+    const unsubProjects = onSnapshot(query(collection(db, "projects"), where("status", "in", ["ACTIVE", "PLANNING"])), s => {
+      setProjects(s.docs.map(d => ({ id: d.id, ...d.data() })));
+    }, handleError);
 
-    const unsubComp = onSnapshot(collection(db, "completedProjects"), s =>
-      setCompleted(s.docs.map(d => ({ id: d.id, ...d.data() })))
-    );
+    const unsubInstalls = onSnapshot(query(collection(db, "installations"), where("status", "==", "PENDING")), s => {
+      setInstallations(s.docs.map(d => ({ id: d.id, ...d.data() })));
+    }, handleError);
+
+    const unsubComp = onSnapshot(collection(db, "completedProjects"), s => {
+      setCompleted(s.docs.map(d => ({ id: d.id, ...d.data() })));
+    }, handleError);
 
     return () => {
       unsubLeads();
@@ -115,6 +132,9 @@ export const MasterDashboard = () => {
       <div className="text-3xl font-bold text-slate-800">{value}</div>
     </div>
   );
+
+  if (error) return <ErrorAlert onRetry={() => window.location.reload()} />;
+  if (loading) return <LoadingSpinner message="Reconstructing global dashboard data..." />;
 
   return (
     <div className="space-y-6">

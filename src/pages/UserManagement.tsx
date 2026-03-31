@@ -4,16 +4,32 @@ import { db } from '../lib/firebase';
 import { UserStatus, UserRole } from '../types';
 import { approveUser, rejectUser, deactivateUser, updateUserRole, deleteUserAccount } from '../services/userService';
 import { Shield, ShieldAlert, Check, X, Trash2, Edit } from 'lucide-react';
+import { useAuth } from '../hooks/useAuth';
+import { LoadingSpinner } from '../components/common/LoadingSpinner';
+import { ErrorAlert } from '../components/common/ErrorAlert';
+import { Unauthorized } from '../components/common/Unauthorized';
 
 export const UserManagement = () => {
+  const { user } = useAuth();
   const [allUsers, setAllUsers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    const unsub = onSnapshot(collection(db, "sales_users"), s =>
-      setAllUsers(s.docs.map(d => ({ id: d.id, ...d.data() })))
-    );
+    const unsub = onSnapshot(collection(db, "sales_users"), s => {
+      setAllUsers(s.docs.map(d => ({ id: d.id, ...d.data() })));
+      setLoading(false);
+    }, (err) => {
+      console.error("UserManagement sync error:", err);
+      setError(true);
+      setLoading(false);
+    });
     return () => unsub();
   }, []);
+
+  if (user?.role !== UserRole.MASTER_ADMIN) return <Unauthorized />;
+  if (error) return <ErrorAlert onRetry={() => window.location.reload()} />;
+  if (loading) return <LoadingSpinner message="Accessing active directory..." />;
 
   const pendingUsers = allUsers.filter(u => u.status === UserStatus.PENDING);
   const activeUsers = allUsers.filter(u => u.status !== UserStatus.PENDING);
