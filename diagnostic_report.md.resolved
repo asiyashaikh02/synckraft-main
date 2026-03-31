@@ -1,0 +1,36 @@
+# System Diagnostic Report
+
+Based on the analysis of the project structure and source files, here are the identified issues preventing the application from running:
+
+## 1. Missing Files
+The following page files are imported in [App.tsx](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/App.tsx) but **do not exist** in the `src/pages/` directory:
+- `src/pages/OpsDashboard.tsx`
+- `src/pages/SiteVisits.tsx`
+- `src/pages/Proposals.tsx`
+- `src/pages/Installations.tsx`
+- `src/pages/Projects.tsx`
+- `src/pages/CompletedProjects.tsx`
+
+## 2. Corrupted & Misplaced Files
+- **Structure breaking File Misplacement**: Many core files and folders that conventionally belong tightly coupled inside the `src` folder are currently scattered in the project **root** directory. 
+  - Found in Root: [App.tsx](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/App.tsx), [index.tsx](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/index.tsx), [constants.tsx](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/constants.tsx), [functions.ts](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/functions.ts), `hooks/`, `lib/`, `services/`.
+  - Found in Src: [Profile.tsx](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/src/Profile.tsx), `components/`, `pages/`, `services/`. (Note: `services/` is duplicated in both root and `src`).
+- **Corrupted Data Dump**: There is a file named [on](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/on) in the root directory that contains a Raw Git log dump (likely an accidental pipe output `git log > on`).
+
+## 3. Broken Imports
+- **Missing Pages**: [App.tsx](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/App.tsx) continuously attempts to import the 6 missing pages listed above. This is a fatal compilation error in Vite/Webpack.
+- **Pathing Chaos**: Because [App.tsx](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/App.tsx) exists in the root directory rather than `src`, its imports look like `import { DashboardLayout } from './src/components/Layout/DashboardLayout';`. 
+- **Unused Services**: [App.tsx](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/App.tsx) imports `createLead`, `updateLeadAssignment`, and `updateCustomerAssignment` from `./services/...` but never uses them.
+
+## 4. Routing Issues
+- The Ops-related routes exist in [App.tsx](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/App.tsx) definition (`/ops-dashboard`, `/ops/site-visits`, etc.) but will cause the app to crash entirely since the components they are supposed to render (`<OpsDashboard />`, `<SiteVisits />`) are missing. 
+- Due to [App.tsx](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/App.tsx) and [index.tsx](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/index.tsx) being in the root rather than `src`, standard routing conventions using relative `./pages/...` are fundamentally broken unless fully migrated.
+
+## 5. Firebase Config Issues
+- The [.env](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/.env) file correctly defines the Vite project prefix variables (`VITE_FIREBASE_...`).
+- [lib/firebase.ts](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/lib/firebase.ts) properly uses `import.meta.env` to instantiate the Firebase app config.
+- However, there is a stray [functions.ts](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/functions.ts) script in the project root which seems completely out of place and isolated from the actual `functions/` directory used by Firebase.
+
+## 6. Risk Areas Causing Blank Screen (Crash Points)
+- **Vite compilation failure**: The missing import statements in [App.tsx](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/App.tsx) for the missing Ops pages will cause the development server to fatally fail, leading to either a completely **blank white screen** or a severe Vite overlay error covering the screen on load.
+- **Root Injection Point**: [index.html](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/index.html) references `<script type="module" src="/index.tsx"></script>`. While valid for Vite, [index.tsx](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/index.tsx) relies on [App.tsx](file:///c:/Users/RunTillDone/Downloads/synckraft-crm-mvp%20%281%29/synckraft-crm-mvp%20%281%29/App.tsx) which in turn relies on completely broken missing module structures.

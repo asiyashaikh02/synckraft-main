@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { db } from '../../lib/firebase';
-import { FollowUp, FollowUpStatus, Lead } from '../../types';
-import { subscribeToUserFollowUps, createFollowUp, updateFollowUpStatus } from '../../services/taskService';
+import { useAuth } from '../hooks/useAuth';
+import { db } from '../lib/firebase';
+import { FollowUp, FollowUpStatus, Lead } from '../types';
+import { subscribeToUserFollowUps, createFollowUp, updateFollowUpStatus } from '../services/taskService';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { Calendar, Clock, CheckCircle, XCircle, AlertCircle, Plus } from 'lucide-react';
 

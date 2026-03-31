@@ -180,3 +180,67 @@ export interface Customer {
   createdAt: number;
   activatedAt?: number;
 }
+
+/* =========================
+   OPERATIONS CRM Additions
+========================= */
+
+export enum SiteVisitStatus {
+  SCHEDULED = "SCHEDULED",
+  COMPLETED = "COMPLETED",
+  CANCELLED = "CANCELLED",
+}
+
+export interface SiteVisit {
+  id: string;
+  customerId?: string;
+  customerName: string;
+  date: number;
+  location: string;
+  status: SiteVisitStatus;
+  notes: string;
+  createdAt: number;
+}
+
+export enum ProjectStatus {
+  PLANNING = "PLANNING",
+  ACTIVE = "ACTIVE",
+  ON_HOLD = "ON_HOLD",
+  READY_FOR_INSTALLATION = "READY_FOR_INSTALLATION"
+}
+
+export interface Project {
+  id: string;
+  customerId: string;
+  customerName: string;
+  status: ProjectStatus;
+  managerId: string;
+  createdAt: number;
+}
+
+export enum InstallationStatus {
+  PENDING = "PENDING",
+  IN_PROGRESS = "IN_PROGRESS",
+  COMPLETED = "COMPLETED"
+}
+
+export interface Installation {
+  id: string;
+  projectId: string;
+  customerName: string;
+  scheduledDate: number;
+  crewDetails: string;
+  status: InstallationStatus;
+  createdAt: number;
+}
+
+export interface CompletedProject {
+  id: string;
+  projectId: string;
+  customerName: string;
+  completionDate: number;
+  finalCapacityKw: number;
+  handoverNotes: string;
+  createdAt: number;
+}
+

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot, query, orderBy, limit } from 'firebase/firestore';
-import { db } from '../../lib/firebase';
-import { ActivityLog, ActivityType } from '../../types';
+import { db } from '../lib/firebase';
+import { ActivityLog, ActivityType } from '../types';
 import { Phone, MapPin, Repeat, RefreshCcw, Clock, AlertCircle } from 'lucide-react';
 
 export const ActivityMonitoring = () => {

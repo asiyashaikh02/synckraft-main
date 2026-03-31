@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 import { 
   Briefcase, 
   Flame, 
@@ -20,8 +20,8 @@ import {
   Cell
 } from 'recharts';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
-import { db } from '../../lib/firebase';
-import { LeadStatus, Lead, FollowUp, FollowUpStatus } from '../../types';
+import { db } from '../lib/firebase';
+import { LeadStatus, Lead, FollowUp, FollowUpStatus } from '../types';
 
 export const SalesDashboard = () => {
   const { user } = useAuth();

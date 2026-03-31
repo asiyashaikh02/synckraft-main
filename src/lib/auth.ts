@@ -7,8 +7,7 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "./firebase";
 import { UserRole, UserStatus } from "../types";
 
-// 🔐 Only this email becomes MASTER_ADMIN automatically
-const MASTER_ADMIN_EMAIL = "admin@gmail.com";
+// 🔐 Roles are now managed exclusively in Firestore (sales_users collection)
 
 /**
  * Register new user
@@ -20,14 +19,12 @@ const MASTER_ADMIN_EMAIL = "admin@gmail.com";
 ) => {
   const cred = await createUserWithEmailAndPassword(auth, email, pass);
 
-  const isMasterAdmin = email === MASTER_ADMIN_EMAIL;
-
   const profile = {
     uid: cred.user.uid,
     email,
     displayName: name,
-    role: isMasterAdmin ? UserRole.MASTER_ADMIN : selectedRole,
-    status: isMasterAdmin ? UserStatus.ACTIVE : UserStatus.PENDING,
+    role: selectedRole,
+    status: UserStatus.PENDING, // All new users start as PENDING
     createdAt: Date.now(),
   };
 
@@ -70,25 +67,19 @@ export const loginUser = async (email: string, pass: string) => {
   const ref = doc(db, "sales_users", uid);
   const snap = await getDoc(ref);
 
-  // 🔥 AUTO-HEAL: profile missing
+  // 🔥 AUTO-HEAL: If profile is missing, create a PENDING one
   if (!snap.exists()) {
-    const isMasterAdmin = email === MASTER_ADMIN_EMAIL;
     const profile = {
       uid,
       email,
       displayName: cred.user.displayName || "",
-      role: isMasterAdmin ? UserRole.MASTER_ADMIN : UserRole.SALES_USER,
-      status: isMasterAdmin ? UserStatus.ACTIVE : UserStatus.PENDING,
+      role: UserRole.SALES_USER,
+      status: UserStatus.PENDING,
       createdAt: Date.now(),
     };
 
     await setDoc(ref, profile);
-
-    if (!isMasterAdmin) {
-      throw new Error("Account Pending Approval");
-    }
-
-    return profile;
+    throw new Error("Account Pending Approval");
   }
 
   const data = snap.data();

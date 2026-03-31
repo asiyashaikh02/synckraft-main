@@ -4,35 +4,31 @@ import { useAuth } from './hooks/useAuth';
 import { UserRole, UserStatus } from './types';
 import { Icons } from './constants';
 import { registerUser, loginUser, logoutUser } from './lib/auth';
-import { DashboardLayout } from './src/components/Layout/DashboardLayout';
-import { MasterDashboard } from './src/pages/MasterDashboard';
-import { UserManagement } from './src/pages/UserManagement';
-import { SalesAdminDashboard } from './src/pages/SalesAdminDashboard';
-import { TeamLeads } from './src/pages/TeamLeads';
-import { SalesTeam } from './src/pages/SalesTeam';
-import { TeamPerformance } from './src/pages/TeamPerformance';
-import { ActivityMonitoring } from './src/pages/ActivityMonitoring';
-import { SalesDashboard } from './src/pages/SalesDashboard';
-import { MyLeads } from './src/pages/MyLeads';
-import { LeadDetail } from './src/pages/LeadDetail';
-import { FollowUps } from './src/pages/FollowUps';
-import { Tasks } from './src/pages/Tasks';
-import { NotesPage } from './src/pages/NotesPage';
-import { createLead, updateLeadAssignment } from './services/leadService';
-import { updateCustomerAssignment } from './services/customerService';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from './lib/firebase';
-import ProfileView from './src/Profile';
-import { OpsDashboard } from './src/pages/OpsDashboard';
-import { SiteVisits } from './src/pages/SiteVisits';
-import { Proposals } from './src/pages/Proposals';
-import { Installations } from './src/pages/Installations';
-import { Projects } from './src/pages/Projects';
-import { CompletedProjects } from './src/pages/CompletedProjects';
+import { DashboardLayout } from './components/Layout/DashboardLayout';
+import { MasterDashboard } from './pages/MasterDashboard';
+import { UserManagement } from './pages/UserManagement';
+import { SalesAdminDashboard } from './pages/SalesAdminDashboard';
+import { TeamLeads } from './pages/TeamLeads';
+import { SalesTeam } from './pages/SalesTeam';
+import { TeamPerformance } from './pages/TeamPerformance';
+import { ActivityMonitoring } from './pages/ActivityMonitoring';
+import { SalesDashboard } from './pages/SalesDashboard';
+import { MyLeads } from './pages/MyLeads';
+import { LeadDetail } from './pages/LeadDetail';
+import { FollowUps } from './pages/FollowUps';
+import { Tasks } from './pages/Tasks';
+import { NotesPage } from './pages/NotesPage';
+import ProfileView from './Profile';
+import { OpsDashboard } from './pages/OpsDashboard';
+import { SiteVisits } from './pages/SiteVisits';
+import { Proposals } from './pages/Proposals';
+import { Installations } from './pages/Installations';
+import { Projects } from './pages/Projects';
+import { CompletedProjects } from './pages/CompletedProjects';
 
 export default function App() {
   const { user, loading } = useAuth();
-  
+
   if (loading) {
     return (
       <div className="h-screen flex items-center justify-center bg-slate-900 text-white">
@@ -46,12 +42,12 @@ export default function App() {
       <Routes>
         <Route path="/login" element={user ? <Navigate to="/" replace /> : <AuthView initialMode="login" />} />
         <Route path="/register" element={user ? <Navigate to="/" replace /> : <AuthView initialMode="register" />} />
-        
+
         {/* Protected Routes */}
         <Route element={<ProtectedRoute user={user} />}>
           <Route element={<DashboardLayout><Outlet /></DashboardLayout>}>
             <Route path="/" element={<HomeRedirect user={user} />} />
-            
+
             {/* Master Admin Only */}
             <Route element={<RoleRoute user={user} allowedRoles={[UserRole.MASTER_ADMIN]} />}>
               <Route path="/master-dashboard" element={<MasterDashboard />} />
@@ -111,7 +107,7 @@ const HomeRedirect = ({ user }: { user: any }) => {
 
 const ProtectedRoute = ({ user }: { user: any }) => {
   if (!user) return <Navigate to="/login" replace />;
-  
+
   if (user.status === UserStatus.PENDING) {
     return (
       <div className="h-screen flex flex-col items-center justify-center bg-slate-900 text-center p-8">
@@ -133,12 +129,12 @@ const ProtectedRoute = ({ user }: { user: any }) => {
       </div>
     );
   }
-  
+
   if (user.status === UserStatus.REJECTED) {
-     return (
+    return (
       <div className="h-screen flex flex-col items-center justify-center bg-slate-900 text-center p-8">
         <div className="w-20 h-20 mb-6 flex items-center justify-center rounded-full bg-red-500">
-           <Icons.Users />
+          <Icons.Users />
         </div>
         <h1 className="text-3xl font-bold text-white mb-2">Account Access Revoked</h1>
         <p className="text-slate-400 max-w-md mb-8">
@@ -213,14 +209,14 @@ const AuthView = ({ initialMode }: { initialMode: 'login' | 'register' }) => {
         onChange={e => setForm({ ...form, pass: e.target.value })}
       />
       {mode === 'register' && (
-         <select 
-            className="p-2 rounded-md text-black w-64"
-            value={form.role}
-            onChange={e => setForm({ ...form, role: e.target.value as UserRole })}
-         >
-            <option value={UserRole.SALES_USER}>Sales User</option>
-            <option value={UserRole.OPS_USER}>Ops User</option>
-         </select>
+        <select
+          className="p-2 rounded-md text-black w-64"
+          value={form.role}
+          onChange={e => setForm({ ...form, role: e.target.value as UserRole })}
+        >
+          <option value={UserRole.SALES_USER}>Sales User</option>
+          <option value={UserRole.OPS_USER}>Ops User</option>
+        </select>
       )}
       <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md font-bold transition-colors duration-200">
         {mode === 'login' ? 'Login' : 'Request Access'}
@@ -239,21 +235,21 @@ const AuthView = ({ initialMode }: { initialMode: 'login' | 'register' }) => {
 
 /* ---------------- PLACEHOLDERS FOR OLD ROUTES TO PREVENT BREAKING APP LOGIC ---------------- */
 const LeadsPlaceholder = () => {
-    return (
-        <div>
-            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Leads Module</h1>
-            <p className="text-slate-500 text-sm mt-1">This module will be refactored in a future phase.</p>
-        </div>
-    )
+  return (
+    <div>
+      <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Leads Module</h1>
+      <p className="text-slate-500 text-sm mt-1">This module will be refactored in a future phase.</p>
+    </div>
+  )
 }
 
 const CustomersPlaceholder = () => {
-    return (
-        <div>
-            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Operations Module</h1>
-             <p className="text-slate-500 text-sm mt-1">This module will be refactored in a future phase.</p>
-        </div>
-    )
+  return (
+    <div>
+      <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Operations Module</h1>
+      <p className="text-slate-500 text-sm mt-1">This module will be refactored in a future phase.</p>
+    </div>
+  )
 }
 
 // Profile modal wrapper usage

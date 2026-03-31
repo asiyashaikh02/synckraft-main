@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot, query } from 'firebase/firestore';
-import { db } from '../../lib/firebase';
-import { Lead, LeadStatus, UserRole } from '../../types';
-import { updateLeadAssignment } from '../../services/leadService';
+import { db } from '../lib/firebase';
+import { Lead, LeadStatus, UserRole } from '../types';
+import { updateLeadAssignment } from '../services/leadService';
 import { Search, Filter, MapPin, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const TeamLeads = () => {

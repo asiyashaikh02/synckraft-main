@@ -10,30 +10,30 @@ export const approveUser = async (userId: string) => {
   // mark user active
   await updateDoc(userRef, { status: UserStatus.ACTIVE });
 
-  // create profile in `profiles` collection
-  const profilesCol = collection(db, 'profiles');
+  // Generate uniqueId for this user
   const uniqueId = genUniqueId();
-
-  // read basic user data to copy into profile
+  
+  // update user document with the uniqueId and any other fields that were previously in profiles
   const userSnap = await getDoc(userRef);
-  const userData = userSnap.exists() ? userSnap.data() as any : { name: '', email: '' };
+  const userData = userSnap.exists() ? userSnap.data() as any : {};
 
-  const profileRef = doc(profilesCol);
-  const profile = {
-    id: profileRef.id,
-    name: userData.displayName || userData.name || '',
-    email: userData.email || '',
-    contact: '',
-    role: userData.role || UserRole.SALES_USER,
+  const profileUpdates = {
     uniqueId,
-    createdAt: Date.now(),
-    userRef: userRef.path,
+    name: userData.displayName || userData.name || '',
+    contact: '',
+    updatedAt: Date.now(),
+    // We no longer use a separate profileRef
+    profileRef: null 
   };
 
-  await setDoc(profileRef, profile);
+  await updateDoc(userRef, profileUpdates);
 
-  // link profile back to user document
-  await updateDoc(userRef, { profileRef: profileRef.path });
+  // For compatibility with return values, we can return the merged object
+  const profile = {
+    ...userData,
+    ...profileUpdates,
+    id: userId
+  };
 
   // Update any existing leads/customers for this user to attach the new uniqueId / clientCode
   try {
@@ -73,27 +73,10 @@ export const deactivateUser = async (userId: string) => {
 export const updateUserRole = async (userId: string, role: UserRole) => {
   const userRef = doc(db, 'sales_users', userId);
   await updateDoc(userRef, { role: role });
-  
-  // Attempt to sync role to profile as well
-  const userSnap = await getDoc(userRef);
-  if (userSnap.exists()) {
-    const data = userSnap.data();
-    if (data.profileRef) {
-       const profileRef = doc(db, data.profileRef);
-       await updateDoc(profileRef, { role: role });
-    }
-  }
 }
 
 export const deleteUserAccount = async (userId: string) => {
   const userRef = doc(db, 'sales_users', userId);
-  
-  // Delete the profile if referenced
-  const userSnap = await getDoc(userRef);
-  if (userSnap.exists() && userSnap.data().profileRef) {
-      await deleteDoc(doc(db, userSnap.data().profileRef));
-  }
-  
-  // Then delete the user document
+  // Profile is now part of the user document, so deleting userRef deletes everything
   await deleteDoc(userRef);
 }

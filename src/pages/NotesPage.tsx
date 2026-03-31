@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { db } from '../../lib/firebase';
-import { Note, Lead } from '../../types';
+import { useAuth } from '../hooks/useAuth';
+import { db } from '../lib/firebase';
+import { Note, Lead } from '../types';
 import { collection, getDocs, query, where, onSnapshot, orderBy } from 'firebase/firestore';
 import { FileText, Calendar, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
-import { db } from '../../lib/firebase';
-import { UserRole, LeadStatus } from '../../types';
+import { db } from '../lib/firebase';
+import { UserRole, LeadStatus } from '../types';
 import { User, Mail, Briefcase, DollarSign, TrendingUp } from 'lucide-react';
 
 export const SalesTeam = () => {

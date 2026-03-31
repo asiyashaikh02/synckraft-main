@@ -1,7 +1,7 @@
 import React from 'react';
 import { Search, Bell, ChevronDown } from 'lucide-react';
-import { useAuth } from '../../../hooks/useAuth';
-import { logoutUser } from '../../../lib/auth';
+import { useAuth } from '../../hooks/useAuth';
+import { logoutUser } from '../../lib/auth';
 
 export const TopHeader = () => {
   const { user } = useAuth();

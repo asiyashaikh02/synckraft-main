@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { doc, onSnapshot, getDoc, updateDoc } from 'firebase/firestore';
-import { db } from '../../lib/firebase';
-import { useAuth } from '../../hooks/useAuth';
+import { db } from '../lib/firebase';
+import { useAuth } from '../hooks/useAuth';
 import { 
   Lead, LeadStatus, Note, ActivityLog, SolarProposal,
   ActivityType
-} from '../../types';
-import { subscribeToLeadNotes, addNote } from '../../services/noteService';
-import { logActivity, subscribeToLeadActivities } from '../../services/activityService';
+} from '../types';
+import { subscribeToLeadNotes, addNote } from '../services/noteService';
+import { logActivity, subscribeToLeadActivities } from '../services/activityService';
 import { 
   ArrowLeft, Building2, User, Phone, Mail, MapPin, 
   Brain, Send, FileText, Activity, Zap, CheckCircle, Clock

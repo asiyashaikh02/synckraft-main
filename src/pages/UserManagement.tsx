@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '../../lib/firebase';
-import { UserStatus, UserRole } from '../../types';
-import { approveUser, rejectUser, deactivateUser, updateUserRole, deleteUserAccount } from '../../services/userService';
+import { db } from '../lib/firebase';
+import { UserStatus, UserRole } from '../types';
+import { approveUser, rejectUser, deactivateUser, updateUserRole, deleteUserAccount } from '../services/userService';
 import { Shield, ShieldAlert, Check, X, Trash2, Edit } from 'lucide-react';
 
 export const UserManagement = () => {

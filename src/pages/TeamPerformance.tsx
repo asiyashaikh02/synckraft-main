@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
-import { db } from '../../lib/firebase';
-import { UserRole, LeadStatus, ActivityType } from '../../types';
+import { db } from '../lib/firebase';
+import { UserRole, LeadStatus, ActivityType } from '../types';
 import { BarChart2, Activity, Target, PhoneCall } from 'lucide-react';
 
 export const TeamPerformance = () => {

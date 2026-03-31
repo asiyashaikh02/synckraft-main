@@ -2,8 +2,74 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if false;
+    // HELPERS
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function getUserData() {
+      return get(/databases/$(database)/documents/sales_users/$(request.auth.uid)).data;
+    }
+    
+    function hasRole(role) {
+      return isSignedIn() && getUserData().role == role;
+    }
+
+    function isMasterAdmin() {
+      return hasRole('MASTER_ADMIN');
+    }
+
+    function isSalesAdmin() {
+      return hasRole('SALES_ADMIN');
+    }
+
+    function isSalesUser() {
+      return hasRole('SALES_USER');
+    }
+
+    function isOpsUser() {
+      return hasRole('OPS_USER');
+    }
+
+    // COLLECTIONS
+
+    // sales_users: Manage user roles and profiles
+    match /sales_users/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isMasterAdmin() || (isSignedIn() && request.auth.uid == userId);
+    }
+
+    // leads: Restricted by ownership and role
+    match /leads/{leadId} {
+      allow read, write: if isMasterAdmin() || isSalesAdmin() || (isSalesUser() && (resource == null || resource.data.salesUserId == request.auth.uid));
+    }
+
+    // customers: Sales and Ops need access
+    match /customers/{customerId} {
+      allow read: if isSignedIn();
+      allow write: if isMasterAdmin() || isSalesAdmin() || isSalesUser() || isOpsUser();
+    }
+
+    // siteVisits & proposals: Sales data
+    match /siteVisits/{id} {
+      allow read, write: if isMasterAdmin() || isSalesAdmin() || isSalesUser() || isOpsUser();
+    }
+    match /proposals/{id} {
+      allow read, write: if isMasterAdmin() || isSalesAdmin() || isSalesUser() || isOpsUser();
+    }
+
+    // ops modules: Only for Ops and Master Admin
+    match /projects/{id} {
+      allow read: if isSignedIn();
+      allow write: if isMasterAdmin() || isOpsUser();
+    }
+    match /installations/{id} {
+      allow read: if isSignedIn();
+      allow write: if isMasterAdmin() || isOpsUser();
+    }
+    match /completedProjects/{id} {
+      allow read: if isSignedIn();
+      allow write: if isMasterAdmin() || isOpsUser();
     }
   }
 }

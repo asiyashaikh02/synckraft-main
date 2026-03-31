@@ -17,7 +17,7 @@ export function useAuth() {
     return onAuthStateChanged(auth, (fbUser) => {
       if (fbUser) {
         // Fetch profile data from Firestore on successful auth
-        const unsub = onSnapshot(doc(db, "users", fbUser.uid), (snap) => {
+        const unsub = onSnapshot(doc(db, "sales_users", fbUser.uid), (snap) => {
           setUser(snap.data() as UserProfile);
           setLoading(false);
         });

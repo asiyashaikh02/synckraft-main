@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot, query, where, orderBy } from 'firebase/firestore';
-import { db } from '../../lib/firebase';
-import { Lead, LeadStatus } from '../../types';
+import { db } from '../lib/firebase';
+import { Lead, LeadStatus } from '../types';
 import { Search, Filter, MapPin, AlertCircle, ChevronLeft, ChevronRight, Eye } from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
 export const MyLeads = () => {

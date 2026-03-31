@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../hooks/useAuth';
-import { getProfileByPath, getProfileByUserId, updateProfile, subscribeToProfile } from '../services/profileService';
-import { UserRole } from '../types';
+import { useAuth } from './hooks/useAuth';
+import { getProfileByPath, getProfileByUserId, updateProfile, subscribeToProfile } from './services/profileService';
+import { UserRole } from './types';
 
 type Props = { onClose: () => void; profileId?: string };
 

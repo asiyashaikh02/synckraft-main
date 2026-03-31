@@ -1,33 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Users, 
-  Briefcase, 
-  CheckCircle, 
-  Flame, 
-  DollarSign, 
-  TrendingUp 
+import {
+  Users,
+  Briefcase,
+  CheckCircle,
+  Flame,
+  DollarSign,
+  TrendingUp,
+  MapPin,
+  HardHat,
+  PenTool,
+  Plus
 } from 'lucide-react';
-import { 
-  LineChart, 
-  Line, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
-  BarChart,
-  Bar,
   PieChart,
   Pie,
   Cell
 } from 'recharts';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '../../lib/firebase';
-import { LeadStatus } from '../../types';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { db } from '../lib/firebase';
+import { LeadStatus } from '../types';
+import { useNavigate } from 'react-router-dom';
+import { runDataMigration } from '../services/migrationService';
 
 export const MasterDashboard = () => {
   const [leads, setLeads] = useState<any[]>([]);
   const [customers, setCustomers] = useState<any[]>([]);
+  const [projects, setProjects] = useState<any[]>([]);
+  const [installations, setInstallations] = useState<any[]>([]);
+  const [completed, setCompleted] = useState<any[]>([]);
+  const [migrating, setMigrating] = useState(false);
+  const navigate = useNavigate();
+
+  const handleMigration = async () => {
+    if (!window.confirm("Run data migration to standardize collections?")) return;
+    setMigrating(true);
+    const res = await runDataMigration();
+    setMigrating(false);
+    if (res.success) {
+      alert(`Migration successful. Documents fixed: ${res.count}`);
+    } else {
+      alert("Migration failed. Check console.");
+    }
+  };
 
   useEffect(() => {
     const unsubLeads = onSnapshot(collection(db, "leads"), s =>
@@ -38,22 +59,36 @@ export const MasterDashboard = () => {
       setCustomers(s.docs.map(d => ({ id: d.id, ...d.data() })))
     );
 
+    // Only fetch ACTIVE or PLANNING projects
+    const unsubProjects = onSnapshot(query(collection(db, "projects"), where("status", "in", ["ACTIVE", "PLANNING"])), s =>
+      setProjects(s.docs.map(d => ({ id: d.id, ...d.data() })))
+    );
+
+    // Only fetch PENDING installations
+    const unsubInstalls = onSnapshot(query(collection(db, "installations"), where("status", "==", "PENDING")), s =>
+      setInstallations(s.docs.map(d => ({ id: d.id, ...d.data() })))
+    );
+
+    const unsubComp = onSnapshot(collection(db, "completedProjects"), s =>
+      setCompleted(s.docs.map(d => ({ id: d.id, ...d.data() })))
+    );
+
     return () => {
       unsubLeads();
       unsubCustomers();
+      unsubProjects();
+      unsubInstalls();
+      unsubComp();
     };
   }, []);
 
-  // Compute Metrics
   const totalLeads = leads.length;
-  const activeLeads = leads.filter(l => l.status !== LeadStatus.REJECTED && l.status !== LeadStatus.APPROVED).length;
-  const convertedLeads = customers.length;
-  const hotLeads = leads.filter(l => l.potentialValue > 10000).length; // Arbitrary "hot" definition
-  
+  const activeProjects = projects.length;
+  const pendingInstalls = installations.length;
+  const completedCount = completed.length;
+  const hotLeads = leads.filter(l => l.potentialValue > 10000).length;
   const totalRevenue = customers.reduce((acc, curr) => acc + (Number(curr.billingAmount) || 0), 0);
-  const conversionRate = totalLeads ? Math.round((convertedLeads / totalLeads) * 100) : 0;
 
-  // Chart Data: Lead Status
   const leadStatusData = [
     { name: 'New', value: leads.filter(l => l.status === LeadStatus.NEW).length },
     { name: 'Negotiation', value: leads.filter(l => l.status === LeadStatus.NEGOTIATION).length },
@@ -62,15 +97,6 @@ export const MasterDashboard = () => {
   ];
 
   const COLORS = ['#6366f1', '#f59e0b', '#10b981', '#ef4444'];
-
-  // Chart Data: Mock Leads Over Time (using createdAt if available, otherwise just mock data)
-  const leadsOverTime = [
-    { name: 'Jan', leads: 4 },
-    { name: 'Feb', leads: 7 },
-    { name: 'Mar', leads: 15 },
-    { name: 'Apr', leads: 22 },
-    { name: 'May', leads: totalLeads },
-  ];
 
   const StatCard = ({ title, value, icon: Icon, colorClass, trend }: any) => (
     <div className="bg-white p-6 rounded-2xl border border-slate-200 flex flex-col">
@@ -92,42 +118,41 @@ export const MasterDashboard = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Master Dashboard</h1>
-          <p className="text-slate-500 text-sm mt-1">Overview of your entire system performance.</p>
+          <p className="text-slate-500 text-sm mt-1">Holistic overview of the organizational pipeline.</p>
+        </div>
+        <div className="flex space-x-3">
+          <button onClick={() => alert("Lead creation dialog opened")} className="flex items-center bg-indigo-50 text-indigo-700 px-4 py-2 rounded-lg font-medium hover:bg-indigo-100 transition">
+            <Plus className="w-4 h-4 mr-2" /> Lead
+          </button>
+          <button onClick={() => alert("Proposal generation opened")} className="flex items-center bg-indigo-50 text-indigo-700 px-4 py-2 rounded-lg font-medium hover:bg-indigo-100 transition">
+            <Plus className="w-4 h-4 mr-2" /> Proposal
+          </button>
+          <button 
+            disabled={migrating}
+            onClick={handleMigration} 
+            className="flex items-center bg-red-50 text-red-700 px-4 py-2 rounded-lg font-medium hover:bg-red-100 transition disabled:opacity-50"
+          >
+            {migrating ? 'Migrating...' : 'Run Migration'}
+          </button>
+          <button onClick={() => navigate('/site-visit-scheduling')} className="flex items-center bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-indigo-700 transition">
+            <Plus className="w-4 h-4 mr-2" /> Site Visit
+          </button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
         <StatCard title="Total Leads" value={totalLeads} icon={Users} colorClass="bg-indigo-50 text-indigo-600" trend="+12%" />
-        <StatCard title="Active Leads" value={activeLeads} icon={Briefcase} colorClass="bg-blue-50 text-blue-600" />
-        <StatCard title="Converted" value={convertedLeads} icon={CheckCircle} colorClass="bg-emerald-50 text-emerald-600" trend="+5%" />
         <StatCard title="Hot Leads" value={hotLeads} icon={Flame} colorClass="bg-orange-50 text-orange-600" />
-        <StatCard title="Total Revenue" value={`$${totalRevenue.toLocaleString()}`} icon={DollarSign} colorClass="bg-amber-50 text-amber-600" trend="+24%" />
-        <StatCard title="Win Rate" value={`${conversionRate}%`} icon={TrendingUp} colorClass="bg-purple-50 text-purple-600" />
+        <StatCard title="Active Projects" value={activeProjects} icon={HardHat} colorClass="bg-blue-50 text-blue-600" />
+        <StatCard title="Pending Installs" value={pendingInstalls} icon={PenTool} colorClass="bg-amber-50 text-amber-600" />
+        <StatCard title="Completed" value={completedCount} icon={CheckCircle} colorClass="bg-emerald-50 text-emerald-600" trend="+5%" />
+        <StatCard title="Total Revenue" value={`$${totalRevenue.toLocaleString()}`} icon={DollarSign} colorClass="bg-purple-50 text-purple-600" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Leads Over Time Chart */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200">
-          <h3 className="font-bold text-slate-800 mb-6">Leads Generation (YTD)</h3>
-          <div className="h-72">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={leadsOverTime}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748b'}} />
-                <YAxis axisLine={false} tickLine={false} tick={{fill: '#64748b'}} />
-                <Tooltip 
-                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-                />
-                <Line type="monotone" dataKey="leads" stroke="#6366f1" strokeWidth={3} dot={{r: 4, strokeWidth: 2}} activeDot={{r: 6}} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Lead Status Distribution */}
         <div className="bg-white p-6 rounded-2xl border border-slate-200 flex flex-col">
           <h3 className="font-bold text-slate-800 mb-6">Lead Pipeline Distribution</h3>
           <div className="flex-1 flex items-center justify-center">
@@ -135,18 +160,12 @@ export const MasterDashboard = () => {
               <div className="h-72 w-full flex items-center">
                 <ResponsiveContainer width="50%" height="100%">
                   <PieChart>
-                    <Pie
-                      data={leadStatusData}
-                      innerRadius={60}
-                      outerRadius={80}
-                      paddingAngle={5}
-                      dataKey="value"
-                    >
+                    <Pie data={leadStatusData} innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value">
                       {leadStatusData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>
-                    <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}/>
+                    <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
                   </PieChart>
                 </ResponsiveContainer>
                 <div className="w-1/2 space-y-4">
@@ -162,8 +181,28 @@ export const MasterDashboard = () => {
                 </div>
               </div>
             ) : (
-                <div className="text-sm text-slate-400">Not enough data to generate chart.</div>
+              <div className="text-sm text-slate-400 p-8 text-center w-full">No active leads currently tracking in database.</div>
             )}
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl border border-slate-200">
+          <h3 className="font-bold text-slate-800 mb-6">Operations Queue Insight</h3>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center p-4 border border-slate-100 rounded-lg hover:bg-slate-50">
+              <div>
+                <p className="font-semibold text-slate-800">Projects Staging</p>
+                <p className="text-sm text-slate-500">Awaiting installation dates</p>
+              </div>
+              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-bold">{activeProjects}</span>
+            </div>
+            <div className="flex justify-between items-center p-4 border border-slate-100 rounded-lg hover:bg-slate-50">
+              <div>
+                <p className="font-semibold text-slate-800">Pending Operations</p>
+                <p className="text-sm text-slate-500">Installation crews deploying</p>
+              </div>
+              <span className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full font-bold">{pendingInstalls}</span>
+            </div>
           </div>
         </div>
       </div>
