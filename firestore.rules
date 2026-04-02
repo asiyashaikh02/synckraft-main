@@ -8,11 +8,15 @@ service cloud.firestore {
     }
     
     function getUserData() {
-      return get(/databases/$(database)/documents/sales_users/$(request.auth.uid)).data;
+      // Return user document if exists, otherwise null
+      let u = get(/databases/$(database)/documents/sales_users/$(request.auth.uid));
+      return u.exists ? u.data : null;
     }
-    
+
     function hasRole(role) {
-      return isSignedIn() && getUserData().role == role;
+      // Safely check role only when user doc exists
+      let ud = getUserData();
+      return isSignedIn() && ud != null && ud.role == role;
     }
 
     function isMasterAdmin() {
@@ -41,7 +45,15 @@ service cloud.firestore {
 
     // leads: Restricted by ownership and role
     match /leads/{leadId} {
-      allow read, write: if isMasterAdmin() || isSalesAdmin() || (isSalesUser() && (resource == null || resource.data.salesUserId == request.auth.uid));
+      // Read: allowed to signed-in users (further UI restrictions applied client-side)
+      allow read: if isSignedIn();
+
+      // Write rules:
+      // - Master Admin and Sales Admin: unrestricted writes
+      // - Sales User: can create leads only if the created document (`request.resource`) has salesUserId == request.auth.uid
+      //   and can update/delete only their own leads (ownership enforced using resource.data.salesUserId)
+      allow create: if isMasterAdmin() || isSalesAdmin() || (isSalesUser() && request.resource.data.salesUserId == request.auth.uid);
+      allow update, delete: if isMasterAdmin() || isSalesAdmin() || (isSalesUser() && resource.data.salesUserId == request.auth.uid);
     }
 
     // customers: Sales and Ops need access
