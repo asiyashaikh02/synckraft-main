@@ -15,7 +15,9 @@ import { UserRole, UserStatus } from "../types";
   email: string,
   pass: string,
   name: string,
-  selectedRole: UserRole
+  selectedRole: UserRole,
+  companyName?: string,
+  phoneNumber?: string
 ) => {
   const cred = await createUserWithEmailAndPassword(auth, email, pass);
 
@@ -24,6 +26,8 @@ import { UserRole, UserStatus } from "../types";
     email,
     displayName: name,
     role: selectedRole,
+    companyName: companyName || "",
+    phoneNumber: phoneNumber || "",
     status: UserStatus.PENDING, // All new users start as PENDING
     createdAt: Date.now(),
   };
