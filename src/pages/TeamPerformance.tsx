@@ -10,7 +10,7 @@ export const TeamPerformance = () => {
   const [activities, setActivities] = useState<any[]>([]);
 
   useEffect(() => {
-    const qUsers = query(collection(db, 'sales_users'), where('role', '==', UserRole.SALES_USER));
+    const qUsers = query(collection(db, 'users'), where('role', '==', UserRole.SALES_USER));
     const unsubUsers = onSnapshot(qUsers, (snapshot) => {
       const users: any[] = [];
       snapshot.forEach(doc => users.push({ id: doc.id, ...doc.data() }));

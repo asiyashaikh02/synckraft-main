@@ -7,7 +7,7 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "./firebase";
 import { UserRole, UserStatus } from "../types";
 
-// 🔐 Roles are now managed exclusively in Firestore (sales_users collection)
+// 🔐 Roles are now managed exclusively in Firestore (`users` collection)
 
 /**
  * Register new user
@@ -15,7 +15,9 @@ import { UserRole, UserStatus } from "../types";
   email: string,
   pass: string,
   name: string,
-  selectedRole: UserRole
+  selectedRole: UserRole,
+  companyName?: string,
+  phoneNumber?: string
 ) => {
   const cred = await createUserWithEmailAndPassword(auth, email, pass);
 
@@ -24,11 +26,13 @@ import { UserRole, UserStatus } from "../types";
     email,
     displayName: name,
     role: selectedRole,
+    companyName: companyName || "",
+    phoneNumber: phoneNumber || "",
     status: UserStatus.PENDING, // All new users start as PENDING
     createdAt: Date.now(),
   };
 
-  await setDoc(doc(db, "sales_users", cred.user.uid), profile);
+  await setDoc(doc(db, "users", cred.user.uid), profile);
   return profile;
 };
 
@@ -61,14 +65,22 @@ import { UserRole, UserStatus } from "../types";
  * - Blocks non-approved users
  */
 export const loginUser = async (email: string, pass: string) => {
-  const cred = await signInWithEmailAndPassword(auth, email, pass);
+  let cred;
+  try {
+    cred = await signInWithEmailAndPassword(auth, email, pass);
+  } catch (error: any) {
+    console.error('Login failed:', error);
+    throw error;
+  }
+
   const uid = cred.user.uid;
 
-  const ref = doc(db, "sales_users", uid);
+  const ref = doc(db, "users", uid);
   const snap = await getDoc(ref);
 
   // 🔥 AUTO-HEAL: If profile is missing, create a PENDING one
   if (!snap.exists()) {
+    console.error('User document not found for uid', uid);
     const profile = {
       uid,
       email,

@@ -6,7 +6,7 @@ import { UserRole, UserStatus } from '../types';
 const genUniqueId = () => 'UID-' + Math.floor(100000 + Math.random() * 900000).toString();
 
 export const approveUser = async (userId: string) => {
-  const userRef = doc(db, 'sales_users', userId);
+  const userRef = doc(db, 'users', userId);
   // mark user active
   await updateDoc(userRef, { status: UserStatus.ACTIVE });
 
@@ -61,22 +61,22 @@ export const approveUser = async (userId: string) => {
 };
 
 export const rejectUser = async (userId: string) => {
-  const userRef = doc(db, 'sales_users', userId);
+  const userRef = doc(db, 'users', userId);
   await updateDoc(userRef, { status: UserStatus.REJECTED });
 };
 
 export const deactivateUser = async (userId: string) => {
-  const userRef = doc(db, 'sales_users', userId);
+  const userRef = doc(db, 'users', userId);
   await updateDoc(userRef, { status: UserStatus.REJECTED });
 }
 
 export const updateUserRole = async (userId: string, role: UserRole) => {
-  const userRef = doc(db, 'sales_users', userId);
+  const userRef = doc(db, 'users', userId);
   await updateDoc(userRef, { role: role });
 }
 
 export const deleteUserAccount = async (userId: string) => {
-  const userRef = doc(db, 'sales_users', userId);
+  const userRef = doc(db, 'users', userId);
   // Profile is now part of the user document, so deleting userRef deletes everything
   await deleteDoc(userRef);
 }

@@ -22,13 +22,13 @@ export const runDataMigration = async () => {
       }
     });
 
-    // 2. Fix sales_users: Ensure basic fields exist
-    const usersSnap = await getDocs(collection(db, "sales_users"));
+    // 2. Fix users: Ensure basic fields exist
+    const usersSnap = await getDocs(collection(db, "users"));
     usersSnap.forEach((userDoc) => {
       const data = userDoc.data();
       if (!data.role) {
         console.log(`Fixing user ${userDoc.id}: missing role`);
-        batch.update(doc(db, "sales_users", userDoc.id), { 
+        batch.update(doc(db, "users", userDoc.id), { 
           role: "SALES_USER",
           status: data.status || "PENDING"
         });

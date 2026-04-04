@@ -2,55 +2,46 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // HELPERS
+    // Production role-based rules
     function isSignedIn() {
       return request.auth != null;
     }
-    
+
     function getUserData() {
-      return get(/databases/$(database)/documents/sales_users/$(request.auth.uid)).data;
+      let u = get(/databases/$(database)/documents/users/$(request.auth.uid));
+      return u.exists ? u.data : null;
     }
-    
+
     function hasRole(role) {
-      return isSignedIn() && getUserData().role == role;
+      let ud = getUserData();
+      return isSignedIn() && ud != null && ud.role == role;
     }
 
-    function isMasterAdmin() {
-      return hasRole('MASTER_ADMIN');
-    }
+    function isMasterAdmin() { return hasRole('MASTER_ADMIN'); }
+    function isSalesAdmin() { return hasRole('SALES_ADMIN'); }
+    function isSalesUser() { return hasRole('SALES_USER'); }
+    function isOpsUser() { return hasRole('OPS_USER'); }
 
-    function isSalesAdmin() {
-      return hasRole('SALES_ADMIN');
-    }
-
-    function isSalesUser() {
-      return hasRole('SALES_USER');
-    }
-
-    function isOpsUser() {
-      return hasRole('OPS_USER');
-    }
-
-    // COLLECTIONS
-
-    // sales_users: Manage user roles and profiles
-    match /sales_users/{userId} {
+    // users collection
+    match /users/{userId} {
       allow read: if isSignedIn();
       allow write: if isMasterAdmin() || (isSignedIn() && request.auth.uid == userId);
     }
 
-    // leads: Restricted by ownership and role
+    // leads
     match /leads/{leadId} {
-      allow read, write: if isMasterAdmin() || isSalesAdmin() || (isSalesUser() && (resource == null || resource.data.salesUserId == request.auth.uid));
+      allow read: if isSignedIn();
+      allow create: if isMasterAdmin() || isSalesAdmin() || (isSalesUser() && request.resource.data.salesUserId == request.auth.uid);
+      allow update, delete: if isMasterAdmin() || isSalesAdmin() || (isSalesUser() && resource.data.salesUserId == request.auth.uid);
     }
 
-    // customers: Sales and Ops need access
+    // customers
     match /customers/{customerId} {
       allow read: if isSignedIn();
       allow write: if isMasterAdmin() || isSalesAdmin() || isSalesUser() || isOpsUser();
     }
 
-    // siteVisits & proposals: Sales data
+    // siteVisits & proposals
     match /siteVisits/{id} {
       allow read, write: if isMasterAdmin() || isSalesAdmin() || isSalesUser() || isOpsUser();
     }
@@ -58,7 +49,7 @@ service cloud.firestore {
       allow read, write: if isMasterAdmin() || isSalesAdmin() || isSalesUser() || isOpsUser();
     }
 
-    // ops modules: Only for Ops and Master Admin
+    // ops modules
     match /projects/{id} {
       allow read: if isSignedIn();
       allow write: if isMasterAdmin() || isOpsUser();

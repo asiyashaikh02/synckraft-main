@@ -163,7 +163,7 @@ const RoleRoute = ({ user, allowedRoles }: { user: any, allowedRoles: UserRole[]
 /* ---------------- AUTH VIEWS ---------------- */
 const AuthView = ({ initialMode }: { initialMode: 'login' | 'register' }) => {
   const [mode, setMode] = useState(initialMode);
-  const [form, setForm] = useState({ name: '', email: '', pass: '', role: UserRole.SALES_USER });
+  const [form, setForm] = useState({ name: '', email: '', pass: '', companyName: '', phone: '', role: UserRole.SALES_USER });
   const validateEmail = (e: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -176,7 +176,7 @@ const AuthView = ({ initialMode }: { initialMode: 'login' | 'register' }) => {
         await loginUser(form.email, form.pass);
       } else {
         if (!form.name) return alert('Name required');
-        await registerUser(form.email, form.pass, form.name, form.role);
+        await registerUser(form.email, form.pass, form.name, form.role, form.companyName, form.phone);
         alert('Registration successful. Awaiting admin approval.');
       }
     } catch (err: any) {
@@ -191,11 +191,23 @@ const AuthView = ({ initialMode }: { initialMode: 'login' | 'register' }) => {
     >
       <div className="text-2xl font-black text-indigo-500 mb-4">Synckraft CRM</div>
       {mode === 'register' && (
-        <input
-          placeholder="Full Name"
-          className="p-2 rounded-md text-black w-64"
-          onChange={e => setForm({ ...form, name: e.target.value })}
-        />
+        <div className="space-y-4 flex flex-col">
+          <input
+            placeholder="Full Name"
+            className="p-2 rounded-md text-slate-900 w-64"
+            onChange={e => setForm({ ...form, name: e.target.value })}
+          />
+          <input
+            placeholder="Company Name"
+            className="p-2 rounded-md text-slate-900 w-64"
+            onChange={e => setForm({ ...form, companyName: e.target.value })}
+          />
+          <input
+            placeholder="Phone Number"
+            className="p-2 rounded-md text-slate-900 w-64"
+            onChange={e => setForm({ ...form, phone: e.target.value })}
+          />
+        </div>
       )}
       <input
         placeholder="Email"
