@@ -2,86 +2,10 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // HELPERS
-    function isSignedIn() {
-      return request.auth != null;
-    }
-    
-    function getUserData() {
-      // Return user document if exists, otherwise null
-      let u = get(/databases/$(database)/documents/users/$(request.auth.uid));
-      return u.exists ? u.data : null;
-    }
-
-    function hasRole(role) {
-      // Safely check role only when user doc exists
-      let ud = getUserData();
-      return isSignedIn() && ud != null && ud.role == role;
-    }
-
-    function isMasterAdmin() {
-      return hasRole('MASTER_ADMIN');
-    }
-
-    function isSalesAdmin() {
-      return hasRole('SALES_ADMIN');
-    }
-
-    function isSalesUser() {
-      return hasRole('SALES_USER');
-    }
-
-    function isOpsUser() {
-      return hasRole('OPS_USER');
-    }
-
-    // COLLECTIONS
-
-    // users: Manage user roles and profiles
-    match /users/{userId} {
-      allow read: if isSignedIn();
-      allow write: if isMasterAdmin() || (isSignedIn() && request.auth.uid == userId);
-    }
-
-    // leads: Restricted by ownership and role
-    match /leads/{leadId} {
-      // Read: allowed to signed-in users (further UI restrictions applied client-side)
-      allow read: if isSignedIn();
-
-      // Write rules:
-      // - Master Admin and Sales Admin: unrestricted writes
-      // - Sales User: can create leads only if the created document (`request.resource`) has salesUserId == request.auth.uid
-      //   and can update/delete only their own leads (ownership enforced using resource.data.salesUserId)
-      allow create: if isMasterAdmin() || isSalesAdmin() || (isSalesUser() && request.resource.data.salesUserId == request.auth.uid);
-      allow update, delete: if isMasterAdmin() || isSalesAdmin() || (isSalesUser() && resource.data.salesUserId == request.auth.uid);
-    }
-
-    // customers: Sales and Ops need access
-    match /customers/{customerId} {
-      allow read: if isSignedIn();
-      allow write: if isMasterAdmin() || isSalesAdmin() || isSalesUser() || isOpsUser();
-    }
-
-    // siteVisits & proposals: Sales data
-    match /siteVisits/{id} {
-      allow read, write: if isMasterAdmin() || isSalesAdmin() || isSalesUser() || isOpsUser();
-    }
-    match /proposals/{id} {
-      allow read, write: if isMasterAdmin() || isSalesAdmin() || isSalesUser() || isOpsUser();
-    }
-
-    // ops modules: Only for Ops and Master Admin
-    match /projects/{id} {
-      allow read: if isSignedIn();
-      allow write: if isMasterAdmin() || isOpsUser();
-    }
-    match /installations/{id} {
-      allow read: if isSignedIn();
-      allow write: if isMasterAdmin() || isOpsUser();
-    }
-    match /completedProjects/{id} {
-      allow read: if isSignedIn();
-      allow write: if isMasterAdmin() || isOpsUser();
+    // TEMPORARY PERMISSIVE RULES FOR DEBUGGING
+    // WARNING: These rules allow public read/write access. Deploy only for short-lived testing.
+    match /{document=**} {
+      allow read, write: if true;
     }
   }
 }
