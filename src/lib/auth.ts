@@ -2,6 +2,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut as fbSignOut,
+  setPersistence,
+  browserLocalPersistence,
 } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "./firebase";
@@ -67,6 +69,14 @@ import { UserRole, UserStatus } from "../types";
 export const loginUser = async (email: string, pass: string) => {
   let cred;
   try {
+    // Ensure auth persistence is set to local (survive page reloads)
+    try {
+      await setPersistence(auth, browserLocalPersistence);
+    } catch (pErr) {
+      // non-fatal: log and continue
+      console.warn('Could not set auth persistence:', pErr);
+    }
+
     cred = await signInWithEmailAndPassword(auth, email, pass);
   } catch (error: any) {
     console.error('Login failed:', error);

@@ -1,4 +1,8 @@
-/* Minimal app stylesheet — add app-level styles here */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Minimal overrides */
 :root {
   --bg: #f8fafc;
   --text: #0f172a;
@@ -10,11 +14,9 @@ html, body, #root {
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
   background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-/* Keep this file minimal — integrate Tailwind via PostCSS if desired */
