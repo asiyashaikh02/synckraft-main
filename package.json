@@ -23,6 +23,7 @@
     "autoprefixer": "^10.4.27",
     "postcss": "^8.5.8",
     "tailwindcss": "^4.2.2",
+    "@tailwindcss/postcss": "^1.0.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   }
