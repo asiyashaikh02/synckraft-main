@@ -29,7 +29,7 @@ export const TeamLeads = () => {
     });
 
     // Fetch Sales Users for dropdown
-    const fetchSalesUsers = onSnapshot(collection(db, 'sales_users'), (snapshot) => {
+    const fetchSalesUsers = onSnapshot(collection(db, 'users'), (snapshot) => {
       const users: any[] = [];
       snapshot.forEach(doc => {
         const u = { id: doc.id, ...doc.data() } as any;

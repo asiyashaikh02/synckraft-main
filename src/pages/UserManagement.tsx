@@ -16,7 +16,7 @@ export const UserManagement = () => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const unsub = onSnapshot(collection(db, "sales_users"), s => {
+    const unsub = onSnapshot(collection(db, "users"), s => {
       setAllUsers(s.docs.map(d => ({ id: d.id, ...d.data() })));
       setLoading(false);
     }, (err) => {

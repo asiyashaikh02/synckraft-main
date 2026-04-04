@@ -9,7 +9,7 @@ service cloud.firestore {
     
     function getUserData() {
       // Return user document if exists, otherwise null
-      let u = get(/databases/$(database)/documents/sales_users/$(request.auth.uid));
+      let u = get(/databases/$(database)/documents/users/$(request.auth.uid));
       return u.exists ? u.data : null;
     }
 
@@ -37,8 +37,8 @@ service cloud.firestore {
 
     // COLLECTIONS
 
-    // sales_users: Manage user roles and profiles
-    match /sales_users/{userId} {
+    // users: Manage user roles and profiles
+    match /users/{userId} {
       allow read: if isSignedIn();
       allow write: if isMasterAdmin() || (isSignedIn() && request.auth.uid == userId);
     }
