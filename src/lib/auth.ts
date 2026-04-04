@@ -70,14 +70,6 @@ export const loginUser = async (email: string, pass: string) => {
     cred = await signInWithEmailAndPassword(auth, email, pass);
   } catch (error: any) {
     console.error('Login failed:', error);
-    try {
-      // show a user-friendly alert in the browser during debugging
-      // (UI should handle errors in production)
-      // eslint-disable-next-line no-alert
-      alert(error?.message || 'Login failed');
-    } catch (e) {
-      // ignore if alert is unavailable
-    }
     throw error;
   }
 

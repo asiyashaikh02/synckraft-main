@@ -22,10 +22,6 @@ export function useAuth() {
           (snap) => {
             if (!snap.exists()) {
               console.error('User document not found for uid', fbUser.uid);
-              try {
-                // eslint-disable-next-line no-alert
-                alert('User profile not found');
-              } catch (e) {}
               setUser(null);
               setLoading(false);
               return;
@@ -38,10 +34,8 @@ export function useAuth() {
             const msg = err?.message || String(err);
             if (msg.toLowerCase().includes('client is offline')) {
               console.error('Firestore snapshot error (useAuth): User profile not found (client offline)');
-              try { alert('User profile not found'); } catch (e) {}
             } else {
               console.error('Firestore snapshot error (useAuth):', err);
-              try { alert('Firestore error: ' + msg); } catch (e) {}
             }
             setLoading(false);
           }
