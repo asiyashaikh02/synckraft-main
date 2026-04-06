@@ -17,19 +17,10 @@ service cloud.firestore {
       return isSignedIn() && ud != null && ud.role == role;
     }
 
-    function isMasterAdmin() { 
-      // Hard fallback verifying the secure Master Admin email via JWT token, overriding db lookup latency
-      return (request.auth != null && request.auth.token.email == 'asiyashk@synckraft.in') || hasRole('MASTER_ADMIN'); 
-    }
-    
+    function isMasterAdmin() { return hasRole('MASTER_ADMIN'); }
     function isSalesAdmin() { return hasRole('SALES_ADMIN'); }
     function isSalesUser() { return hasRole('SALES_USER'); }
     function isOpsUser() { return hasRole('OPS_USER'); }
-
-    // Global safeguard for Master Admins
-    match /{document=**} {
-      allow read, write: if isMasterAdmin();
-    }
 
     // users collection
     match /users/{userId} {

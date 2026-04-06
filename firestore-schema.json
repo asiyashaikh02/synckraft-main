@@ -1,0 +1,44 @@
+{
+  "users": {
+    "status": "created",
+    "schema": {
+      "_auto_generated": "boolean",
+      "scannedAt": "string"
+    }
+  },
+  "leads": {
+    "status": "created",
+    "schema": {
+      "_auto_generated": "boolean",
+      "scannedAt": "string"
+    }
+  },
+  "activity_logs": {
+    "status": "error",
+    "code": "PERMISSION_DENIED"
+  },
+  "plans": {
+    "status": "error",
+    "code": "PERMISSION_DENIED"
+  },
+  "sales_metrics": {
+    "status": "error",
+    "code": "PERMISSION_DENIED"
+  },
+  "sales_daily_stats": {
+    "status": "error",
+    "code": "PERMISSION_DENIED"
+  },
+  "plan_analytics": {
+    "status": "error",
+    "code": "PERMISSION_DENIED"
+  },
+  "Lead_Notes": {
+    "status": "error",
+    "code": "PERMISSION_DENIED"
+  },
+  "Phase2_details": {
+    "status": "error",
+    "code": "PERMISSION_DENIED"
+  }
+}
