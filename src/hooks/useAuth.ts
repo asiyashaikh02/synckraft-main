@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { onIdTokenChanged, signOut } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
 import { auth, db } from "../lib/firebase";
 import { UserProfile } from "../types";
@@ -17,8 +17,8 @@ export function useAuth() {
   const [loading, setLoading] = useState(!user);
 
   useEffect(() => {
-    // Subscribe to auth state changes
-    return onAuthStateChanged(auth, (fbUser) => {
+    // Subscribe to auth state and token changes (handles silent refreshes)
+    return onIdTokenChanged(auth, async (fbUser) => {
       if (fbUser) {
         // Fetch profile data from Firestore on successful auth
         const unsub = onSnapshot(
@@ -29,6 +29,8 @@ export function useAuth() {
               setUser(null);
               localStorage.removeItem('synckraft_user_profile');
               setLoading(false);
+              // Self-healing: if the user document is deleted or missing, log out the Firebase session
+              signOut(auth).catch(console.error);
               return;
             }
             const profileData = snap.data() as UserProfile;
