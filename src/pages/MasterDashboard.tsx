@@ -23,7 +23,7 @@ import {
   Pie,
   Cell
 } from 'recharts';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { collection, onSnapshot, query, where, limit, orderBy } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { LeadStatus, UserRole } from '../types';
 import { useNavigate } from 'react-router-dom';
@@ -69,24 +69,24 @@ export const MasterDashboard = () => {
       setLoading(false);
     };
 
-    const unsubLeads = onSnapshot(collection(db, "leads"), s => {
+    const unsubLeads = onSnapshot(query(collection(db, "leads"), orderBy("createdAt", "desc"), limit(100)), s => {
       setLeads(s.docs.map(d => ({ id: d.id, ...d.data() })));
       setLoading(false);
     }, handleError);
 
-    const unsubCustomers = onSnapshot(collection(db, "customers"), s => {
+    const unsubCustomers = onSnapshot(query(collection(db, "customers"), limit(100)), s => {
       setCustomers(s.docs.map(d => ({ id: d.id, ...d.data() })));
     }, handleError);
 
-    const unsubProjects = onSnapshot(query(collection(db, "projects"), where("status", "in", ["ACTIVE", "PLANNING"])), s => {
+    const unsubProjects = onSnapshot(query(collection(db, "projects"), where("status", "in", ["ACTIVE", "PLANNING"]), limit(100)), s => {
       setProjects(s.docs.map(d => ({ id: d.id, ...d.data() })));
     }, handleError);
 
-    const unsubInstalls = onSnapshot(query(collection(db, "installations"), where("status", "==", "PENDING")), s => {
+    const unsubInstalls = onSnapshot(query(collection(db, "installations"), where("status", "==", "PENDING"), limit(100)), s => {
       setInstallations(s.docs.map(d => ({ id: d.id, ...d.data() })));
     }, handleError);
 
-    const unsubComp = onSnapshot(collection(db, "completedProjects"), s => {
+    const unsubComp = onSnapshot(query(collection(db, "completedProjects"), limit(100)), s => {
       setCompleted(s.docs.map(d => ({ id: d.id, ...d.data() })));
     }, handleError);
 
