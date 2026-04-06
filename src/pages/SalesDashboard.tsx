@@ -152,7 +152,7 @@ export const SalesDashboard = () => {
         {/* Pipeline Distribution */}
         <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
           <h2 className="text-lg font-bold text-slate-900 mb-6 flex items-center">
-            <BarChart className="w-5 h-5 mr-2 text-indigo-500" />
+            <span className="w-5 h-5 mr-2 flex items-center justify-center text-indigo-500">📊</span>
             Lead Pipeline Distribution
           </h2>
           <div className="h-80 w-full flex items-center justify-center">

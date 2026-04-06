@@ -70,6 +70,7 @@ export default function App() {
             <Route element={<RoleRoute user={user} allowedRoles={[UserRole.MASTER_ADMIN, UserRole.SALES_ADMIN, UserRole.SALES_USER]} />}>
               <Route path="/sales-dashboard" element={<SalesDashboard />} />
               <Route path="/my-leads" element={<MyLeads />} />
+              <Route path="/leads" element={<LeadsPlaceholder />} />
               <Route path="/leads/:id" element={<LeadDetail />} />
               <Route path="/follow-ups" element={<FollowUps />} />
               <Route path="/tasks" element={<Tasks />} />
