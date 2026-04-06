@@ -154,7 +154,10 @@ const ProtectedRoute = ({ user }: { user: any }) => {
 };
 
 const RoleRoute = ({ user, allowedRoles }: { user: any, allowedRoles: UserRole[] }) => {
-  if (!user || !allowedRoles.includes(user.role)) {
+  if (!user) return <Navigate to="/login" replace />;
+  if (user.role === UserRole.MASTER_ADMIN) return <Outlet />;
+  
+  if (!allowedRoles.includes(user.role)) {
     return <Navigate to="/" replace />; // Redirect unauthorized away from specific role paths
   }
   return <Outlet />;

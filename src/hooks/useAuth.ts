@@ -9,8 +9,12 @@ import { UserProfile } from "../types";
  * Hook to manage and provide current authentication state and user profile.
  */
 export function useAuth() {
-  const [user, setUser] = useState<UserProfile | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<UserProfile | null>(() => {
+    const cached = localStorage.getItem('synckraft_user_profile');
+    return cached ? JSON.parse(cached) : null;
+  });
+  // If we have a cached user, we can assume not loading to prevent initial UI flicker
+  const [loading, setLoading] = useState(!user);
 
   useEffect(() => {
     // Subscribe to auth state changes
@@ -23,10 +27,15 @@ export function useAuth() {
             if (!snap.exists()) {
               console.error('User document not found for uid', fbUser.uid);
               setUser(null);
+              localStorage.removeItem('synckraft_user_profile');
               setLoading(false);
               return;
             }
-            setUser(snap.data() as UserProfile);
+            const profileData = snap.data() as UserProfile;
+            if (JSON.stringify(user) !== JSON.stringify(profileData)) {
+                setUser(profileData);
+                localStorage.setItem('synckraft_user_profile', JSON.stringify(profileData));
+            }
             setLoading(false);
           },
           (err) => {
@@ -43,6 +52,7 @@ export function useAuth() {
         return unsub;
       } else {
         setUser(null);
+        localStorage.removeItem('synckraft_user_profile');
         setLoading(false);
       }
     });
