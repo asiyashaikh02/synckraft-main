@@ -1,0 +1,14 @@
+#!/bin/bash
+# Auto-stabilization script before branch switching
+git status -s | grep -q .
+if [ $? -eq 0 ]; then
+    echo "Uncommitted changes detected. Auto-committing for stability..."
+    git add .
+    git commit -m "auto: pre-phase stabilization commit"
+    if [ $? -ne 0 ]; then
+        echo "Commit failed. Auto-stashing as fallback..."
+        git stash push -m "auto-stash"
+    fi
+else
+    echo "Workspace clean. Ready to proceed."
+fi
